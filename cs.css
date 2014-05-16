@@ -1,0 +1,13 @@
+#easywiki {
+	padding: 5px 10px;
+	border: 1px solid white;
+	position: fixed;
+	top: 2px;
+	right: 200px;
+	z-index: 10;
+	background: rgba(0,0,0,.6);
+	color: white;
+}
+input#ewcheckbox:hover {
+	cursor: hover;
+}

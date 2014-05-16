@@ -1,0 +1,22 @@
+body{
+	width:300px;
+	overflow-x: hidden;
+	margin: 0px;
+	padding: 0px;
+	color: rgb(50, 207, 50);
+	background: rgb(0, 0, 0);
+}
+header {
+	text-align: center;
+	padding: 7px 10px;
+	font-family: monospace;
+	font-size: 14pt;
+	border-bottom: 1px dashed rgba(50, 207, 50, .5);	
+}
+section {
+	padding: 10px;
+	font-family: Consolas;
+}
+.inlineblock{display: inline-block;}
+.domain{width:80%;}
+.count{width: 10%}
