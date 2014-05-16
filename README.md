@@ -13,3 +13,7 @@ Features:
 2. Increases the font to `30px` in readmode
 3. Hides the left sidebar while in readmode
 4. Certain sites which serves as intermediate, for ex: `MAIN_PAGE` are blaclisted, they aren't modified to readmode by default
+
+Screenshots:
+============
+![Screenshot of Popup of easyWiki](http://cistoner.org/blog/minhaz/wp-content/uploads/2014/05/scn.png)
