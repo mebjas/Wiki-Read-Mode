@@ -1,10 +1,64 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>	Safe site </title>
+<title>	WikiPedia Read Mode </title>
 <link href="popup.css" rel="stylesheet" type="text/css">
 <body>
-	<input type="checkbox" id="switch"> Modify
+	<header> EasyWiki </header>
+	<section>
+		<div class="info-zone-1" title="click to disable">
+			Read Mode <span class="enabled">Enabled</span>
+		</div>
+		<div class="info-zone-2">
+			Allow you to modify wikipedia, to an easy to read website!
+		</div>
+		<div class="customisation-option">
+			<div class='header'>ReadMode Options</div>
+			<div class="custom-ui"></div>
+			<div class="custom-menus center">
+				<select class="custom-font center inlineblock">
+					<option value="Calibri">Calibri</option>
+					<option value="Consolas">Consolas</option>
+					<option value="Aerial">Aerial</option>
+					<option value="Times new roman">Times new roman</option>
+					<option value="Monospace">Monospace</option>
+					<option value="Comic Sans MS">Comics Sans MS</option>
+					<option value="Cursive">Cursive</option>
+					<option value="Sans-serif">Sans-serif</option>
+					<option value="fantasy">fantasy</option>
+					<option value="serif">serif</option>
+					<option value="lucida calligraphy">lucida calligraphy</option>
+					<option value="lucida console">lucida console</option>	
+					<option value="Palatino">Palatino</option>
+					<option value="Helvetica">Helvetica</option>
+					<option value="Gadget">Gadget</option>
+					<option value="Impact">Impact</option>
+					<option value="Verdana">Verdana</option>
+					<option value="Tahoma">Tahoma</option>
+					<option value="Lucida Sans Unicode">Lucida Sans Unicode</option>
+					<option value="Trebuchet MS">Trebuchet MS</option>
+					<option value="MS Sans Serif">MS Sans Serif</option>
+					<option value="Palatino Linotype">Palatino Linotype</option>
+					<option value="Arial Black">Arial Black</option>
+					<option value="Courier New">Courier New</option>	
+				</select>
+				<select class="custom-size center inlineblock">
+					<option value='18'>18px</option>
+					<option value='19'>19px</option>
+					<option value='20'>20px</option>
+					<option value='21'>21px</option>
+					<option value='22'>22px</option>
+					<option value='23'>23px</option>
+					<option value='24'>24px</option>
+					<option value='25'>25px</option>
+				</select>
+			</div>
+			<div class="final">
+				<button class="button-disabled">Disable</button>
+			</div>
+		</div>
+	</section>
+	<footer></footer>
 </body>
 <script src="jquery-2.1.0.min.js"></script>
 <script src="popup.js"></script>

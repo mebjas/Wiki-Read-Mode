@@ -1,22 +1,100 @@
 body{
-	width:300px;
+	width:250px;
 	overflow-x: hidden;
 	margin: 0px;
 	padding: 0px;
-	color: rgb(50, 207, 50);
-	background: rgb(0, 0, 0);
 }
 header {
 	text-align: center;
 	padding: 7px 10px;
 	font-family: monospace;
-	font-size: 14pt;
-	border-bottom: 1px dashed rgba(50, 207, 50, .5);	
+	font-size: 24pt;
+	background: rgb(43, 134, 214);
+	color: white;
+	font-weight: bold;
 }
 section {
-	padding: 10px;
 	font-family: Consolas;
 }
-.inlineblock{display: inline-block;}
-.domain{width:80%;}
-.count{width: 10%}
+div.info-zone-1 {
+	text-align: center;
+	padding: 20px 0px 20px 0px;
+	font-weight: bold;
+	background: rgba(0, 0, 0, 0.06);
+}
+.enabled {
+	border: none;
+	color: white;
+	background: rgba(52, 194, 52, 0.69);
+	border-radius: 10px;
+	padding: 1px 6px;
+	font-family: consolas;
+	cursor: pointer;
+}
+.disabled {
+	border: none;
+	cursor: pointer;
+	background: rgba(230, 130, 23, 0.82);
+	color: white;
+	padding: 1px 6px;
+	border-radius: 10px;
+	font-weight: bold;
+	font-family: consolas;
+}
+button.button-enabled {
+	margin-right: 10px;
+	background: rgba(52, 194, 52, 0.78);
+	color: white;
+	border: 1px solid rgb(194, 94, 1);
+	border-radius: 18px;
+	padding: 5px 10px;
+	cursor: pointer;
+	font-weight: bold;
+	font-family: consolas;
+	-webkit-transition: background .6s;
+}
+button.button-enabled:hover {
+	background: rgba(52, 194, 52, 1);
+}
+button.button-disabled {
+	margin-right: 10px;
+	background: rgba(226, 123, 41, 0.78);
+	color: white;
+	border: 1px solid rgb(194, 94, 1);
+	border-radius: 18px;
+	padding: 5px 10px;
+	cursor: pointer;
+	font-weight: bold;
+	font-family: consolas;
+	-webkit-transition: background .6s;
+}
+button.button-disabled:hover {
+	background: rgba(226, 123, 41, 1);
+}
+div.info-zone-2 {
+	padding: 10px;
+	font-family: calibri;
+	font-size: 10pt;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+div.header {
+	background: rgba(0, 0, 0, 0.06);
+	padding: 5px;
+	text-align: center;
+	font-weight: bold;
+}
+div.custom-menus.center {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+div.final {
+	text-align: right;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.07);
+}
+.inlineblock {
+	display: inline-block;
+}
+.center {
+	text-align: center;
+}
