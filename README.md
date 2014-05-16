@@ -16,4 +16,8 @@ Features:
 
 Screenshots:
 ============
-![Screenshot of Popup of easyWiki](http://cistoner.org/blog/minhaz/wp-content/uploads/2014/05/scn.png)
+![Screenshot of Popup of easyWiki](http://cistoner.org/blog/minhaz/wp-content/uploads/2014/05/scn.png)<br>
+**ReadMode ON**
+![Screenshot with ReadMode ON](http://cistoner.org/blog/minhaz/wp-content/uploads/2014/05/sc21-1024x524.png)<br>
+**ReadMode OFF**
+![Screenshot with ReadMode OFF](http://cistoner.org/blog/minhaz/wp-content/uploads/2014/05/sc1.png)
