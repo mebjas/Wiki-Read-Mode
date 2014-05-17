@@ -60,17 +60,23 @@ var code = "//add a function to reset the modifications\n"
 			+"	if (document.getElementById('ewcheckbox').checked) setModification();\n"
 			+"	else resetModification();\n"
 			+"}\n"
-			+"console.log(document.getElementById('easywikireset'));\n";
-//	 		+"document.getElementById('easywikireset').addEventListener('click', resetModification, false);";
-
+			+"var y1 = -50;var y2 = 2;\n"
+			+"var currentPos = document.body.scrollTop;\n"
+			+"function monitor(){\n"
+			+"	var dy = (currentPos - document.body.scrollTop) / 10;\n"
+			+"	if (document.getElementById('easywiki').style.top == '')\n"
+			+"		document.getElementById('easywiki').style.top = '2px';\n"
+			+"	var y = parseInt(document.getElementById('easywiki').style.top) + dy;\n"
+			+"	if (y > y2) y = y2;\n"
+			+"	if (y < y1) y = y1;\n"
+			+"	currentPos = document.body.scrollTop;\n"
+			+"	document.getElementById('easywiki').style.top = y + 'px';\n"
+			+"}\n"
+			+"document.body.onscroll = monitor;\n";
 
 var script = document.createElement('script');
 script.textContent = code;
 (document.head||document.documentElement).appendChild(script);
-
-
-//script.parentNode.removeChild(script);
-
 
 //trigger the modifying function
 modify();
