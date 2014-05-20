@@ -11,3 +11,12 @@
 input#ewcheckbox:hover {
 	cursor: hover;
 }
+input#ewsearch {
+	background-image: url(http://bits.wikimedia.org/static-1.24wmf4/skins/vector/images/search-ltr.png?2014-05-08T07:51:40Z);
+	background-repeat: no-repeat;
+	background-position: right 2px center;
+	border: 1px solid rgba(0, 0, 0, 0.63);
+	padding: 2px 5px;
+	color: grey;
+	cursor: pointer;
+}

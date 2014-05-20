@@ -12,7 +12,11 @@ function modify() {
 	try { 
 	  document.getElementsByClassName('infobox')[0].style.display = 'none';
 	} catch (err) { /** do we need to do something about this error? **/ }
-	document.getElementById('mw-panel').style.display = 'none';
+
+	try {
+		document.getElementById('mw-panel').style.display = 'none';
+	} catch (err) { /** do we need to do something about this error? **/ }
+
 	document.getElementById('content').style.marginLeft = '10px';
 	document.getElementById('content').style.fontSize = '30px';
 	document.getElementById('content').style.fontFamily = 'Calibri';
@@ -31,52 +35,24 @@ function isBlackListed()
 
 
 
-var newDiv = "<div id='easywiki'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <button id='ewbutton'>Blacklist from Read Mode</button></div>";
+var newDiv = "<div id='easywiki'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search'></div>";
 document.body.innerHTML += newDiv;
 
+//code to inject the script to wikipedia 
+function reqListener () {
+	var script_ew = document.createElement('script');
+	script_ew.textContent = this.responseText;
+	(document.head||document.documentElement).appendChild(script_ew);
+}
 
-var code = "//add a function to reset the modifications\n"
-			+"function setModification() {\n"
-			+"try { \n"
-			+"  document.getElementsByClassName('infobox')[0].style.display = 'none';\n"
-			+"} catch (err) { /** do we need to do something about this error? **/ }"
-			+"document.getElementById('mw-panel').style.display = 'none';\n"
-			+"document.getElementById('content').style.marginLeft = '10px';\n"
-			+"document.getElementById('content').style.fontSize = '30px';\n"
-			+"document.getElementById('content').style.fontFamily = 'Calibri';\n"
-			+"}\n"
-			+"function resetModification() {\n"
-			+"	try { \n"
-			+"	  document.getElementsByClassName('infobox')[0].style.display = '';\n"
-			+"} catch (err) {\n"
-	  		+"console.error('ERROR: ' +err);\n"
-			+"}\n"
-			+"document.getElementById('mw-panel').style.display = '';\n"
-			+"document.getElementById('content').style.marginLeft = '12em';\n"
-			+"document.getElementById('content').style.fontSize = '';\n"
-			+"document.getElementById('content').style.fontFamily = '';\n"
-			+"}\n"
-			+"function checkChange() {\n"
-			+"	if (document.getElementById('ewcheckbox').checked) setModification();\n"
-			+"	else resetModification();\n"
-			+"}\n"
-			+"var y1 = -50;var y2 = 2;\n"
-			+"var currentPos = document.body.scrollTop;\n"
-			+"function monitor(){\n"
-			+"	var dy = (currentPos - document.body.scrollTop) / 10;\n"
-			+"	if (document.getElementById('easywiki').style.top == '')\n"
-			+"		document.getElementById('easywiki').style.top = '2px';\n"
-			+"	var y = parseInt(document.getElementById('easywiki').style.top) + dy;\n"
-			+"	if (y > y2) y = y2;\n"
-			+"	if (y < y1) y = y1;\n"
-			+"	currentPos = document.body.scrollTop;\n"
-			+"	document.getElementById('easywiki').style.top = y + 'px';\n"
-			+"}\n"
-			+"document.body.onscroll = monitor;\n";
+var url = chrome.extension.getURL("inject.js");
+var xhrObj = new XMLHttpRequest();
+xhrObj.onload = reqListener;
+xhrObj.open("GET",url);
+xhrObj.send();
 
-var script = document.createElement('script');
-script.textContent = code;
-(document.head||document.documentElement).appendChild(script);
+
 
 //trigger the modifying function
 modify();
+
