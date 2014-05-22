@@ -7,6 +7,13 @@ A **Chrome Extension** to make **wikipedia or any wiki template** based website 
 **Latest Available verion: `0.0.3`**<br>
 **Installation URL:** [Chrome store](https://chrome.google.com/webstore/detail/wikipedia-read-mode/icnpgdbaooggmkndmiaogcokgmpdfdmc), Works for tester only now! Will be available soon!<br>
 
+How to use or contribute
+==========
+1. Clone this repo
+2. compress the folder to a zip
+3. Open `chrome://extensions` & `enable developer mode`
+4. Load Unpacked Extensions, and select the zip! you are ready to use this
+
 Features:
 ==========
 1. User can switch **read mode** `ON` or `OFF`
