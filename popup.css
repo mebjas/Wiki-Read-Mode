@@ -45,7 +45,7 @@ button.button-enabled {
 	margin-right: 10px;
 	background: rgba(52, 194, 52, 0.78);
 	color: white;
-	border: 1px solid rgb(194, 94, 1);
+	border: 1px solid rgb(16, 111, 8);
 	border-radius: 18px;
 	padding: 5px 10px;
 	cursor: pointer;
@@ -89,6 +89,7 @@ div.custom-menus.center {
 }
 div.final {
 	text-align: right;
+	position: relative;
 	padding: 10px;
 	background: rgba(0, 0, 0, 0.07);
 }
@@ -97,4 +98,12 @@ div.final {
 }
 .center {
 	text-align: center;
+}
+.ack {
+	position: absolute;
+	top: 0px;
+	background: rgb(209, 206, 206);
+	left: -119px;
+	padding: 15px 37px 16px 37px;
+	-webkit-transition: left .6s;
 }

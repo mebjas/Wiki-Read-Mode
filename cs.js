@@ -1,3 +1,22 @@
+//================================================
+// init values from localStorage
+//================================================
+var ewprops = {
+	enabled: true,
+	font: "Calibri",
+	size: 30
+}
+if (localStorage['ew_enabled'] && localStorage['ew_enabled'] == "false") {
+	ewprops.enabled = false;
+}
+if (localStorage['ew_font']) {
+	ewprops.font = localStorage['ew_font'];
+}
+if (localStorage['ew_size']) {
+	ewprops.size = localStorage['ew_size'];
+}
+
+
 var blacklist = ['Main_Page','Portal:Contents','Portal:Featured_content','Portal:Current_events','KPOB','Help:Contents','Wikipedia:Community_portal','Special:RecentChanges','Wikipedia:Contact_us']
 
 function modify() {
@@ -18,8 +37,8 @@ function modify() {
 	} catch (err) { /** do we need to do something about this error? **/ }
 
 	document.getElementById('content').style.marginLeft = '10px';
-	document.getElementById('content').style.fontSize = '30px';
-	document.getElementById('content').style.fontFamily = 'Calibri';
+	document.getElementById('content').style.fontSize = ewprops.size +'px';
+	document.getElementById('content').style.fontFamily = ewprops.font;
 	document.getElementById('ewcheckbox').checked = true;
 }
 
@@ -54,5 +73,31 @@ xhrObj.send();
 
 
 //trigger the modifying function
-modify();
+if(ewprops.enabled)
+	modify();
 
+//for recieving property update message from extension
+chrome.runtime.onMessage.addListener(
+  function(request, sender, sendResponse) {
+    if(request.enabled != undefined 
+    	&& request.font != undefined
+    	&& request.size != undefined ) {
+
+    	ewprops.enabled = request.enabled;
+    	ewprops.font = request.font;
+    	ewprops.size = request.size;
+
+    	localStorage['ew_enabled'] = ewprops.enabled;
+    	//need to reflect these changes
+    	localStorage['ew_size'] = ewprops.size;
+    	localStorage['ew_font'] = ewprops.font;
+
+    	if (ewprops.enabled) {
+    		document.getElementById('content').style.fontSize = ewprops.size +'px';
+			document.getElementById('content').style.fontFamily = ewprops.font;
+			document.getElementById('ewcheckbox').checked = true;
+    	}
+
+    	sendResponse({ack: true});
+    }
+});

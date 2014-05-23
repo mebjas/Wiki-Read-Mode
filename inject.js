@@ -1,5 +1,33 @@
+var ewprops = {
+	enabled: true,
+	font: "Calibri",
+	size: 30
+}
+if (localStorage['ew_enabled'] && localStorage['ew_enabled'] == "false") {
+	ewprops.enabled = false;
+}
+if (localStorage['ew_font']) {
+	ewprops.font = localStorage['ew_font'];
+}
+if (localStorage['ew_size']) {
+	ewprops.size = localStorage['ew_size'];
+}
+
+//function to refref the properties
+function refreshProperty() {
+	if (localStorage['ew_font']) {
+		ewprops.font = localStorage['ew_font'];
+	}
+	if (localStorage['ew_size']) {
+		ewprops.size = localStorage['ew_size'];
+	}
+}
+
 //add a function to reset the modifications
 function setModification() {
+	//refresh property first
+	refreshProperty();
+
 	try { 
 		document.getElementsByClassName('infobox')[0].style.display = 'none';
 	} catch (err) { /** do we need to do something about this error? **/ }
@@ -9,8 +37,8 @@ function setModification() {
 	} catch (err) { /** do we need to do something about this error? **/ }
 	
 	document.getElementById('content').style.marginLeft = '10px';
-	document.getElementById('content').style.fontSize = '30px';
-	document.getElementById('content').style.fontFamily = 'Calibri';
+	document.getElementById('content').style.fontSize = ewprops.size +'px';
+	document.getElementById('content').style.fontFamily = ewprops.font;
 }
 
 function resetModification() {
