@@ -57,11 +57,8 @@ document.body.onscroll = monitor;
 //adding search capability to easywiki
 function searchew(event) {
 	var source = document.getElementById('ewsearch');
-	var target = document.getElementById('searchInput');
 	if (event.which == 13 && source.value.length) {
-		target.value = source.value;
-		//trigger
-		document.getElementById('searchButton').click();
+		window.location.href = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
 	}
 }
 
