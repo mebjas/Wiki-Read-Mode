@@ -54,8 +54,9 @@ function isBlackListed()
 
 
 
-var newDiv = "<div id='easywiki'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search'></div>";
+var newDiv = "<div id='easywiki'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search'> <div class='ewmenu'><span>&#x25BC;</span></div></div>";
 document.body.innerHTML += newDiv;
+document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Blacklist this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
 
 //code to inject the script to wikipedia 
 function reqListener () {

@@ -20,3 +20,32 @@ input#ewsearch {
 	color: grey;
 	cursor: pointer;
 }
+
+.ewmenu {
+	display: inline-block;
+	position: relative;
+	width: 10px;
+}
+.ewsubmenu {
+	position: absolute;
+	display: block;
+	background: rgba(0, 0, 0, 0.6);
+	top: 28px;
+	left: -140px;
+	width: 160px;
+	display: none
+}
+.ewsubmenu div {
+	padding: 5px 10px;
+	cursor: pointer;
+	-webkit-transition: background .7s;
+}
+
+.ewsubmenu div:hover {
+	cursor: pointer;
+	background: black;
+}
+
+.ewmenu span {
+	cursor: pointer;
+}

@@ -96,6 +96,9 @@ function monitor(event){
 	if (y < y1) y = y1;
 	currentPos = document.body.scrollTop;
 	document.getElementById('easywiki').style.top = y + 'px';
+
+	//hide menu
+	hideSubMenu();
 }
 document.body.onscroll = monitor;
 
@@ -112,3 +115,35 @@ function searchew(event) {
 }
 
 document.getElementById('ewsearch').onkeyup = searchew;
+
+
+//==================================================================
+//for submenu
+//==================================================================
+function showHideSubMenu(event){
+
+	var source = document.getElementsByClassName('ewmenu')[0];
+	source = source.getElementsByTagName('span')[0];
+
+	var obj = document.getElementsByClassName('ewsubmenu')[0];
+	if (obj.style.display == "none"
+		|| obj.style.display.length === 0) {
+		obj.style.display = 'block';
+		source.innerHTML = '&#x25B2';
+		return;
+	}
+	obj.style.display = 'none';
+	source.innerHTML = '&#x25BC;';
+}
+
+function hideSubMenu() {
+	var obj = document.getElementsByClassName('ewsubmenu')[0];
+	obj.style.display = "none";
+
+	var source = document.getElementsByClassName('ewmenu')[0];
+	source.getElementsByTagName('span')[0].innerHTML = '&#x25BC;';
+}
+
+var temp = document.getElementsByClassName('ewmenu')[0];
+temp = temp.getElementsByTagName('span')[0];
+temp.onclick = showHideSubMenu;
