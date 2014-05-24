@@ -147,3 +147,19 @@ function hideSubMenu() {
 var temp = document.getElementsByClassName('ewmenu')[0];
 temp = temp.getElementsByTagName('span')[0];
 temp.onclick = showHideSubMenu;
+
+//==================================================================
+//add functionality to submenu
+//==================================================================
+temp = document.getElementsByClassName('ewsubmenu')[0];
+temp = temp.getElementsByTagName('div');
+for (var i = 0; i < temp.length; i++) {
+	var attr = temp[i].getAttribute('option');
+	if(attr == 'top') {
+		temp[i].onclick = function() {
+			document.body.scrollTop = 0;
+		}
+	} else if(attr == 'blacklist') {
+		//blacklist current url
+	}
+}
