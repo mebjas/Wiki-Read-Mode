@@ -113,6 +113,22 @@ chrome.runtime.onMessage.addListener(
     		document.getElementById('content').style.fontSize = ewprops.size +'px';
 			document.getElementById('content').style.fontFamily = ewprops.font;
 			document.getElementById('ewcheckbox').checked = true;
+    	} else {
+    		try { 
+				document.getElementsByClassName('infobox')[0].style.display = '';
+			} catch (err) {
+				/** do we need to do something about this error? **/
+			}
+
+			try {
+				document.getElementById('mw-panel').style.display = '';
+			} catch (err) { /** do we need to do something about this error? **/ }
+
+			document.getElementById('content').style.marginLeft = '12em';
+			document.getElementById('content').style.fontSize = '';
+			document.getElementById('content').style.fontFamily = '';
+
+			document.getElementById('ewcheckbox').checked = false;
     	}
 
     	sendResponse({ack: true});
