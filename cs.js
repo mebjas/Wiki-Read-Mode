@@ -16,9 +16,14 @@ if (localStorage['ew_size']) {
 	ewprops.size = localStorage['ew_size'];
 }
 
-
+/**
+ * Array of those pages that are blacklisted by default
+ */
 var blacklist = ['Main_Page','Portal:Contents','Portal:Featured_content','Portal:Current_events','KPOB','Help:Contents','Wikipedia:Community_portal','Special:RecentChanges','Wikipedia:Contact_us']
 
+/**
+ * Function to implement basic modification
+ */
 function modify() {
 
 	//check for blacklist here
@@ -42,6 +47,32 @@ function modify() {
 	document.getElementById('ewcheckbox').checked = true;
 }
 
+/**
+ * Function to reset basic modification
+ */
+function resetModification()
+{
+	try { 
+			document.getElementsByClassName('infobox')[0].style.display = '';
+		} catch (err) {
+			/** do we need to do something about this error? **/
+		}
+			try {
+			document.getElementById('mw-panel').style.display = '';
+		} catch (err) { /** do we need to do something about this error? **/ }
+
+		document.getElementById('content').style.marginLeft = '12em';
+		document.getElementById('content').style.fontSize = '';
+		document.getElementById('content').style.fontFamily = '';
+
+		document.getElementById('ewcheckbox').checked = false;
+}
+
+/**
+ * Function to check if current url is blacklisted
+ * @param: void
+ * @return: bool, true for blacklisted, else false
+ */
 function isBlackListed()
 {
 	var str = location.href.split('/')[4];
@@ -77,7 +108,10 @@ xhrObj.send();
 if(ewprops.enabled)
 	modify();
 
-//for recieving property update message from extension
+/**
+ * Code for recieving property update message from extension
+ * And for proper action
+ */
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if(request.enabled != undefined 
@@ -114,21 +148,7 @@ chrome.runtime.onMessage.addListener(
 			document.getElementById('content').style.fontFamily = ewprops.font;
 			document.getElementById('ewcheckbox').checked = true;
     	} else {
-    		try { 
-				document.getElementsByClassName('infobox')[0].style.display = '';
-			} catch (err) {
-				/** do we need to do something about this error? **/
-			}
-
-			try {
-				document.getElementById('mw-panel').style.display = '';
-			} catch (err) { /** do we need to do something about this error? **/ }
-
-			document.getElementById('content').style.marginLeft = '12em';
-			document.getElementById('content').style.fontSize = '';
-			document.getElementById('content').style.fontFamily = '';
-
-			document.getElementById('ewcheckbox').checked = false;
+    		resetModification();
     	}
 
     	sendResponse({ack: true});
