@@ -56,7 +56,7 @@ function isBlackListed()
 
 var newDiv = "<div id='easywiki'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search'> <div class='ewmenu'><span>&#x25BC;</span></div></div>";
 document.body.innerHTML += newDiv;
-document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Blacklist this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
+document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Never Modify this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
 
 //code to inject the script to wikipedia 
 function reqListener () {
@@ -94,6 +94,22 @@ chrome.runtime.onMessage.addListener(
     	localStorage['ew_font'] = ewprops.font;
 
     	if (ewprops.enabled) {
+
+    		/**
+    		 * hide the not required data before implementing new property
+    		 */
+    		try { 
+			  document.getElementsByClassName('infobox')[0].style.display = 'none';
+			} catch (err) { /** do we need to do something about this error? **/ }
+
+			try {
+				document.getElementById('mw-panel').style.display = 'none';
+			} catch (err) { /** do we need to do something about this error? **/ }
+			document.getElementById('content').style.marginLeft = '10px';
+
+			/**
+			 * implement the new properties
+			 */
     		document.getElementById('content').style.fontSize = ewprops.size +'px';
 			document.getElementById('content').style.fontFamily = ewprops.font;
 			document.getElementById('ewcheckbox').checked = true;

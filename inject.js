@@ -88,7 +88,7 @@ function checkChange() {
 var y1 = -50;var y2 = 2;
 var currentPos = document.body.scrollTop;
 function monitor(event){
-	var dy = (currentPos - document.body.scrollTop) / 5;
+	var dy = (currentPos - document.body.scrollTop) / 2;
 	if (document.getElementById('easywiki').style.top == '')
 		document.getElementById('easywiki').style.top = '2px';
 	var y = parseInt(document.getElementById('easywiki').style.top) + dy;
