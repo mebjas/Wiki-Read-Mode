@@ -99,6 +99,7 @@ function monitor(event){
 
 	//hide menu
 	hideSubMenu();
+	hideContentMenu();
 }
 document.body.onscroll = monitor;
 
@@ -122,26 +123,41 @@ document.getElementById('ewsearch').onkeyup = searchew;
 //==================================================================
 function showHideSubMenu(event){
 
+	hideContentMenu();
 	var source = document.getElementsByClassName('ewmenu')[0];
 	source = source.getElementsByTagName('span')[0];
+	
 
 	var obj = document.getElementsByClassName('ewsubmenu')[0];
 	if (obj.style.display == "none"
 		|| obj.style.display.length === 0) {
 		obj.style.display = 'block';
-		source.innerHTML = '&#x25B2';
+		swapIcon();
 		return;
 	}
 	obj.style.display = 'none';
-	source.innerHTML = '&#x25BC;';
+	swapIcon();
+}
+
+function swapIcon() {
+	var iconImg = document.getElementsByClassName('ewmenu_down')[0];
+	var alt = iconImg.getAttribute('alt');
+	var src = iconImg.getAttribute('src');
+	iconImg.setAttribute('alt', src);
+	iconImg.setAttribute('src', alt);
 }
 
 function hideSubMenu() {
 	var obj = document.getElementsByClassName('ewsubmenu')[0];
-	obj.style.display = "none";
+	if (obj.style.display != 'none') {
+		obj.style.display = "none";
+		swapIcon();
+	}
+}
 
-	var source = document.getElementsByClassName('ewmenu')[0];
-	source.getElementsByTagName('span')[0].innerHTML = '&#x25BC;';
+function hideContentMenu() {
+	document.getElementById('toc_').style.display = 'none';
+	document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
 }
 
 var temp = document.getElementsByClassName('ewmenu')[0];
@@ -163,3 +179,49 @@ for (var i = 0; i < temp.length; i++) {
 		//blacklist current url
 	}
 }
+
+//==================================================================
+// Get Content section from the wiki and add it as a context menu
+//==================================================================
+window.onload = function() {
+	var content = document.getElementById('toc');
+	var contentObj = document.createElement('div');
+	contentObj.className = "toc";
+	contentObj.setAttribute("id", "toc_");
+	contentObj.innerHTML = content.innerHTML;
+
+	// Remove the content menu from actual UI
+	content.parentNode.removeChild(content);
+
+	// Modify the new content menu to suit our need
+	// Insert to DOM
+	document.body.appendChild(contentObj);
+
+	//Now change directly
+	var contentObj = document.getElementById('toc_');
+
+	// Remove title
+	var temp = document.getElementById('toctitle');
+	temp.parentNode.removeChild(temp);
+};
+
+// Add listener to cmenu img
+document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
+	var source = document.getElementsByClassName('ewcmenu')[0];
+	var target = document.getElementById('toc_');
+	var state = source.getAttribute('state');
+	if (typeof state == undefined)
+		state = 'inactive';
+	if (state == 'inactive') {
+		// Need to show
+		target.style.display = 'block';
+		source.setAttribute('state', 'active');
+	} else {
+		target.style.display = 'none';
+		source.setAttribute('state', 'inactive');
+	}
+	hideSubMenu();
+});
+	
+
+

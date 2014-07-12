@@ -19,7 +19,7 @@ if (localStorage['ew_size']) {
 /**
  * Array of those pages that are blacklisted by default
  */
-var blacklist = ['Main_Page','Portal:Contents','Portal:Featured_content','Portal:Current_events','KPOB','Help:Contents','Wikipedia:Community_portal','Special:RecentChanges','Wikipedia:Contact_us']
+var blacklist = ['Main_Page','Portal:Contents','Portal:Featured_content','Portal:Current_events','KPOB','Help:Contents','Wikipedia:Community_portal','Special:RecentChanges','Wikipedia:Contact_us'];
 
 /**
  * Function to implement basic modification
@@ -84,8 +84,16 @@ function isBlackListed()
 }
 
 
+var menuIcon = chrome.extension.getURL("icons/navicon.png");
+var downIcon = chrome.extension.getURL("icons/chevron-down.png");
+var upIcon = chrome.extension.getURL("icons/chevron-up.png");
 
-var newDiv = "<div id='easywiki'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search'> <div class='ewmenu'><span>&#x25BC;</span></div></div>";
+// #todo: change state to inactive by default
+var newDiv = "<div id='easywiki'><img src='"
+			+menuIcon
+			+"' class='ewcmenu px20img' state='inactive' title='View Contents'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search'> <div class='ewmenu'><span>"
+			+"<img src='" +downIcon +"' class='ewmenu_down px20img' alt=' " +upIcon +"'>"
+			+"</span></div></div>";
 document.body.innerHTML += newDiv;
 document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Never Modify this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
 

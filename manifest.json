@@ -17,7 +17,8 @@
     }
   ],
    "web_accessible_resources": [
-    "inject.js"
+    "inject.js",
+    "icons/*"
   ],
   "browser_action": {
     "default_title": "",
