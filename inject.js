@@ -185,24 +185,26 @@ for (var i = 0; i < temp.length; i++) {
 //==================================================================
 window.onload = function() {
 	var content = document.getElementById('toc');
-	var contentObj = document.createElement('div');
-	contentObj.className = "toc";
-	contentObj.setAttribute("id", "toc_");
-	contentObj.innerHTML = content.innerHTML;
+	if (typeof content != undefined) {
+		var contentObj = document.createElement('div');
+		contentObj.className = "toc";
+		contentObj.setAttribute("id", "toc_");
+		contentObj.innerHTML = content.innerHTML;
 
-	// Remove the content menu from actual UI
-	content.parentNode.removeChild(content);
+		// Remove the content menu from actual UI
+		content.parentNode.removeChild(content);
 
-	// Modify the new content menu to suit our need
-	// Insert to DOM
-	document.body.appendChild(contentObj);
+		// Modify the new content menu to suit our need
+		// Insert to DOM
+		document.body.appendChild(contentObj);
 
-	//Now change directly
-	var contentObj = document.getElementById('toc_');
+		//Now change directly
+		var contentObj = document.getElementById('toc_');
 
-	// Remove title
-	var temp = document.getElementById('toctitle');
-	temp.parentNode.removeChild(temp);
+		// Remove title
+		var temp = document.getElementById('toctitle');
+		temp.parentNode.removeChild(temp);
+	}
 };
 
 // Add listener to cmenu img
