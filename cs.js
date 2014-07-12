@@ -29,7 +29,6 @@ function modify() {
 	//check for blacklist here
 	if (isBlackListed()) {
 		document.getElementById('ewcheckbox').checked = false;
-		document.getElementById('ewbutton').innerHTML = 'Remove from Blacklist';
 		return false;
 	} 
 
@@ -80,6 +79,8 @@ function isBlackListed()
 		if(blacklist[i] === str)
 			return true;
 	}
+	if (/.*:\/\/.*\/wiki\/.*\/.*/.exec(document.location.href) != null)
+		return true;
 	return false;
 }
 

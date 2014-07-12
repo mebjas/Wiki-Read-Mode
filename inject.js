@@ -196,7 +196,8 @@ for (var i = 0; i < temp.length; i++) {
 //==================================================================
 window.onload = function() {
 	var content = document.getElementById('toc');
-	if (typeof content != undefined) {
+	if (typeof content != undefined
+		&& content != null) {
 		var contentObj = document.createElement('div');
 		contentObj.className = "toc";
 		contentObj.setAttribute("id", "toc_");
@@ -222,18 +223,21 @@ window.onload = function() {
 document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
 	var source = document.getElementsByClassName('ewcmenu')[0];
 	var target = document.getElementById('toc_');
-	var state = source.getAttribute('state');
-	if (typeof state == undefined)
-		state = 'inactive';
-	if (state == 'inactive') {
-		// Need to show
-		target.style.display = 'block';
-		source.setAttribute('state', 'active');
-	} else {
-		target.style.display = 'none';
-		source.setAttribute('state', 'inactive');
+	if (typeof target != undefined
+		&& target != null) {
+		var state = source.getAttribute('state');
+		if (typeof state == undefined)
+			state = 'inactive';
+		if (state == 'inactive') {
+			// Need to show
+			target.style.display = 'block';
+			source.setAttribute('state', 'active');
+		} else {
+			target.style.display = 'none';
+			source.setAttribute('state', 'inactive');
+		}
+		//hideSubMenu();	
 	}
-	hideSubMenu();
 });
 	
 
