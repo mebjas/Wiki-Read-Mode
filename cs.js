@@ -92,10 +92,10 @@ var upIcon = chrome.extension.getURL("icons/chevron-up.png");
 var newDiv = "<div id='easywiki'><img src='"
 			+menuIcon
 			+"' class='ewcmenu px20img' state='inactive' title='View Contents'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search'> <div class='ewmenu'><span>"
-			+"<img src='" +downIcon +"' class='ewmenu_down px20img' alt=' " +upIcon +"'>"
+			+"<img src='" +upIcon +"' class='movetotop px20img' title='Move to top'>"
 			+"</span></div></div>";
 document.body.innerHTML += newDiv;
-document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Never Modify this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
+//document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Never Modify this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
 
 //code to inject the script to wikipedia 
 function reqListener () {

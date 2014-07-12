@@ -98,7 +98,7 @@ function monitor(event){
 	document.getElementById('easywiki').style.top = y + 'px';
 
 	//hide menu
-	hideSubMenu();
+	//hideSubMenu();
 	hideContentMenu();
 }
 document.body.onscroll = monitor;
@@ -121,6 +121,7 @@ document.getElementById('ewsearch').onkeyup = searchew;
 //==================================================================
 //for submenu
 //==================================================================
+/*
 function showHideSubMenu(event){
 
 	hideContentMenu();
@@ -154,19 +155,28 @@ function hideSubMenu() {
 		swapIcon();
 	}
 }
+*/
 
 function hideContentMenu() {
 	document.getElementById('toc_').style.display = 'none';
 	document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
 }
 
+/*
 var temp = document.getElementsByClassName('ewmenu')[0];
 temp = temp.getElementsByTagName('span')[0];
 temp.onclick = showHideSubMenu;
+*/
+
+// Code to enable Move to top functionality
+document.getElementsByClassName('movetotop')[0].addEventListener('click', function() {
+	document.body.scrollTop = 0;
+});
 
 //==================================================================
 //add functionality to submenu
 //==================================================================
+/*
 temp = document.getElementsByClassName('ewsubmenu')[0];
 temp = temp.getElementsByTagName('div');
 for (var i = 0; i < temp.length; i++) {
@@ -179,6 +189,7 @@ for (var i = 0; i < temp.length; i++) {
 		//blacklist current url
 	}
 }
+*/
 
 //==================================================================
 // Get Content section from the wiki and add it as a context menu
