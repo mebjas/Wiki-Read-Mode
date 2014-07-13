@@ -185,7 +185,8 @@ for (var i = 0; i < temp.length; i++) {
 //==================================================================
 window.onload = function() {
 	var content = document.getElementById('toc');
-	if (typeof content != undefined) {
+	if (typeof content != undefined
+		&& content != null) {
 		var contentObj = document.createElement('div');
 		contentObj.className = "toc";
 		contentObj.setAttribute("id", "toc_");
@@ -212,7 +213,8 @@ document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function
 	var source = document.getElementsByClassName('ewcmenu')[0];
 	var target = document.getElementById('toc_');
 	var state = source.getAttribute('state');
-	if (typeof state == undefined)
+	if (typeof state == undefined
+		&& state != null)
 		state = 'inactive';
 	if (state == 'inactive') {
 		// Need to show
