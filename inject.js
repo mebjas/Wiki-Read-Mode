@@ -118,45 +118,6 @@ function searchew(event) {
 document.getElementById('ewsearch').onkeyup = searchew;
 
 
-//==================================================================
-//for submenu
-//==================================================================
-/*
-function showHideSubMenu(event){
-
-	hideContentMenu();
-	var source = document.getElementsByClassName('ewmenu')[0];
-	source = source.getElementsByTagName('span')[0];
-	
-
-	var obj = document.getElementsByClassName('ewsubmenu')[0];
-	if (obj.style.display == "none"
-		|| obj.style.display.length === 0) {
-		obj.style.display = 'block';
-		swapIcon();
-		return;
-	}
-	obj.style.display = 'none';
-	swapIcon();
-}
-
-function swapIcon() {
-	var iconImg = document.getElementsByClassName('ewmenu_down')[0];
-	var alt = iconImg.getAttribute('alt');
-	var src = iconImg.getAttribute('src');
-	iconImg.setAttribute('alt', src);
-	iconImg.setAttribute('src', alt);
-}
-
-function hideSubMenu() {
-	var obj = document.getElementsByClassName('ewsubmenu')[0];
-	if (obj.style.display != 'none') {
-		obj.style.display = "none";
-		swapIcon();
-	}
-}
-*/
-
 function hideContentMenu() {
 	document.getElementById('toc_').style.display = 'none';
 	document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
@@ -173,23 +134,6 @@ document.getElementsByClassName('movetotop')[0].addEventListener('click', functi
 	document.body.scrollTop = 0;
 });
 
-//==================================================================
-//add functionality to submenu
-//==================================================================
-/*
-temp = document.getElementsByClassName('ewsubmenu')[0];
-temp = temp.getElementsByTagName('div');
-for (var i = 0; i < temp.length; i++) {
-	var attr = temp[i].getAttribute('option');
-	if(attr == 'top') {
-		temp[i].onclick = function() {
-			document.body.scrollTop = 0;
-		}
-	} else if(attr == 'blacklist') {
-		//blacklist current url
-	}
-}
-*/
 
 //==================================================================
 // Get Content section from the wiki and add it as a context menu
