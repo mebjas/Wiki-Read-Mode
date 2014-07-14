@@ -119,8 +119,11 @@ document.getElementById('ewsearch').onkeyup = searchew;
 
 
 function hideContentMenu() {
-	document.getElementById('toc_').style.display = 'none';
-	document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
+	var target = document.getElementById('toc_');
+	if (target != null) {
+		target.style.display = 'none';
+		document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
+	}
 }
 
 /*
@@ -161,28 +164,42 @@ window.onload = function() {
 		var temp = document.getElementById('toctitle');
 		temp.parentNode.removeChild(temp);
 	}
+
+	// Add listener to cmenu img
+	document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
+		var source = document.getElementsByClassName('ewcmenu')[0];
+		var target = document.getElementById('toc_');
+		if (typeof target != undefined
+			&& target != null) {
+			var state = source.getAttribute('state');
+			if (typeof state == undefined)
+				state = 'inactive';
+			if (state == 'inactive') {
+				// Need to show
+				target.style.display = 'block';
+				source.setAttribute('state', 'active');
+			} else {
+				target.style.display = 'none';
+				source.setAttribute('state', 'inactive');
+			}
+			//hideSubMenu();	
+		}
+	});
+
+	// Add listeners to internal links
+	var links = document.getElementById('toc_').getElementsByTagName('a');
+	var i;
+	for (i = 0; i < links.length; i++) {
+		if (links[i].href.indexOf('#') !== -1) {
+			links[i].addEventListener('click', function() {
+				setTimeout(function() {
+					document.getElementById('easywiki').style.top =  '2px';
+				}, 300);
+			});
+		}
+	}
 };
 
-// Add listener to cmenu img
-document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
-	var source = document.getElementsByClassName('ewcmenu')[0];
-	var target = document.getElementById('toc_');
-	if (typeof target != undefined
-		&& target != null) {
-		var state = source.getAttribute('state');
-		if (typeof state == undefined)
-			state = 'inactive';
-		if (state == 'inactive') {
-			// Need to show
-			target.style.display = 'block';
-			source.setAttribute('state', 'active');
-		} else {
-			target.style.display = 'none';
-			source.setAttribute('state', 'inactive');
-		}
-		//hideSubMenu();	
-	}
-});
 	
 
 

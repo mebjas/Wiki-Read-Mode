@@ -7,12 +7,13 @@
 	z-index: 1000;
 	background: rgba(0,0,0,.6);
 	color: white;
+	-webkit-transition: top .3s;
 }
 input#ewcheckbox:hover {
 	cursor: hover;
 }
 input#ewsearch {
-	background-image: url(http://bits.wikimedia.org/static-1.24wmf4/skins/vector/images/search-ltr.png?2014-05-08T07:51:40Z);
+	background-image: url(http://bits.wikimedia.org/static-1.24wmf12/skins/Vector/images/search-ltr.png);
 	background-repeat: no-repeat;
 	background-position: right 2px center;
 	border: 1px solid rgba(0, 0, 0, 0.63);
