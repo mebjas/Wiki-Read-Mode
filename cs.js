@@ -40,7 +40,8 @@ function modify() {
 		document.getElementById('mw-panel').style.display = 'none';
 	} catch (err) { /** do we need to do something about this error? **/ }
 
-	document.getElementById('content').style.marginLeft = '10px';
+	document.getElementById('content').style.marginLeft = '50px';
+	document.getElementById('content').style.marginRight = '50px';
 	document.getElementById('content').style.fontSize = ewprops.size +'px';
 	document.getElementById('content').style.fontFamily = ewprops.font;
 	document.getElementById('ewcheckbox').checked = true;
@@ -61,6 +62,7 @@ function resetModification()
 		} catch (err) { /** do we need to do something about this error? **/ }
 
 		document.getElementById('content').style.marginLeft = '12em';
+		document.getElementById('content').style.marginRight = '';
 		document.getElementById('content').style.fontSize = '';
 		document.getElementById('content').style.fontFamily = '';
 
@@ -79,6 +81,8 @@ function isBlackListed()
 		if(blacklist[i] === str)
 			return true;
 	}
+	if (/.*:\/\/.*\/wiki\/.*\/.*/.exec(document.location.href) != null)
+		return true;
 	return false;
 }
 
@@ -91,10 +95,13 @@ var upIcon = chrome.extension.getURL("icons/chevron-up.png");
 var newDiv = "<div id='easywiki'><img src='"
 			+menuIcon
 			+"' class='ewcmenu px20img' state='inactive' title='View Contents'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search'> <div class='ewmenu'><span>"
-			+"<img src='" +downIcon +"' class='ewmenu_down px20img' alt=' " +upIcon +"'>"
-			+"</span></div></div>";
+			+"<img src='" +upIcon +"' class='movetotop px20img' title='Move to top'>"
+			+"</span></div></div>"
+            +"<div id='searchsuggestions'><div class='ew_ss_header'><span class='ew_search_title'>Search Suggestions</span>"
+            +"<!--<span class='ew_ss_min'>-</span>--><span class='ew_ss_close'>X</span>"
+            +"</div><div class='ew_ss_results'></div></div>";
 document.body.innerHTML += newDiv;
-document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Never Modify this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
+//document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Never Modify this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
 
 //code to inject the script to wikipedia 
 function reqListener () {

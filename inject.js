@@ -16,6 +16,10 @@ var ewprops = {
 	size: 30
 }
 
+// For ajax search capability
+var xhr = new XMLHttpRequest();
+
+
 if (localStorage['ew_enabled'] 
 	&& localStorage['ew_enabled'] == "false") {
 	ewprops.enabled = false;
@@ -54,7 +58,8 @@ function setModification() {
 		document.getElementById('mw-panel').style.display = 'none';
 	} catch (err) { /** do we need to do something about this error? **/ }
 	
-	document.getElementById('content').style.marginLeft = '10px';
+	document.getElementById('content').style.marginLeft = '50px';
+	document.getElementById('content').style.marginRight = '50px';
 	document.getElementById('content').style.fontSize = ewprops.size +'px';
 	document.getElementById('content').style.fontFamily = ewprops.font;
 }
@@ -72,6 +77,7 @@ function resetModification() {
 	} catch (err) { /** do we need to do something about this error? **/ }
 
 	document.getElementById('content').style.marginLeft = '12em';
+	document.getElementById('content').style.marginRight = '';
 	document.getElementById('content').style.fontSize = '';
 	document.getElementById('content').style.fontFamily = '';
 }
@@ -98,7 +104,7 @@ function monitor(event){
 	document.getElementById('easywiki').style.top = y + 'px';
 
 	//hide menu
-	hideSubMenu();
+	//hideSubMenu();
 	hideContentMenu();
 }
 document.body.onscroll = monitor;
@@ -112,73 +118,74 @@ function searchew(event) {
 
 	if (event.which == 13 && source.value.length) {
 		window.location.href = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
-	}
+	} else if (source.value.length){
+        var url = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
+        // Abort existing operation
+        xhr.abort();
+        xhr.open('GET', url);
+        //Add a property to xhr element
+        xhr.url = url;
+        xhr.searchKey = source.value;
+        xhr.send();
+        document.getElementById('searchsuggestions').style.display = 'block';
+        document.getElementsByClassName('ew_search_title')[0].innerHTML = 'Searching: ' +source.value;
+    }
 }
 
+// Code to initiate the search suggestion feature
+xhr.onreadystatechange = XHRReadyStateChangeFunction;
+function XHRReadyStateChangeFunction() {
+    document.getElementsByClassName('ew_search_title')[0].innerHTML = 'Result: ' +this.searchKey;
+    if (this.readyState == 4 && this.status == 200) {
+        if (this.url == this.responseURL) {
+            var c = document.createElement('html');
+            c.innerHTML = this.responseText;
+            var dom = c.getElementsByClassName('mw-search-results');
+            document.getElementsByClassName('ew_ss_results')[0].innerHTML = dom[0].outerHTML;
+            document.getElementById('searchsuggestions').style.display = 'block';
+        } else {
+            document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<ul><li>Direct match found for: ' +this.searchKey
+                +', press on search button or click <a href="' +this.url
+                +'">here</a> to go to this content!</li></ul>';
+            document.getElementById('searchsuggestions').style.display = 'block';
+        }  
+    }   
+}
+// Attach click listener to close button on search suggestion
+document.getElementsByClassName('ew_ss_close')[0].onclick = function() {
+    document.getElementById('searchsuggestions').style.display = 'none';
+}
+
+// Attach listener to enter button press on search input
 document.getElementById('ewsearch').onkeyup = searchew;
 
+// Trigger search when user clicks on search button
+document.getElementById('ewsearch').onclick = function(event) {
+    var parent_left = this.parentNode.offsetLeft;
+    var parent_top = this.parentNode.offsetTop;
+    if (event.x >= (parent_left + this.offsetLeft +this.offsetWidth - 10) 
+        && event.x <= (parent_left + this.offsetLeft +this.offsetWidth)) {
+        if (event.y >= (parent_top + this.offsetTop) 
+        && event.y <= (parent_left + this.offsetLeft +this.offsetHeight)) { 
+            searchew({which: 13});
+        }  
+    }
+};
 
-//==================================================================
-//for submenu
-//==================================================================
-function showHideSubMenu(event){
-
-	hideContentMenu();
-	var source = document.getElementsByClassName('ewmenu')[0];
-	source = source.getElementsByTagName('span')[0];
-	
-
-	var obj = document.getElementsByClassName('ewsubmenu')[0];
-	if (obj.style.display == "none"
-		|| obj.style.display.length === 0) {
-		obj.style.display = 'block';
-		swapIcon();
-		return;
-	}
-	obj.style.display = 'none';
-	swapIcon();
-}
-
-function swapIcon() {
-	var iconImg = document.getElementsByClassName('ewmenu_down')[0];
-	var alt = iconImg.getAttribute('alt');
-	var src = iconImg.getAttribute('src');
-	iconImg.setAttribute('alt', src);
-	iconImg.setAttribute('src', alt);
-}
-
-function hideSubMenu() {
-	var obj = document.getElementsByClassName('ewsubmenu')[0];
-	if (obj.style.display != 'none') {
-		obj.style.display = "none";
-		swapIcon();
-	}
-}
 
 function hideContentMenu() {
-	document.getElementById('toc_').style.display = 'none';
-	document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
-}
-
-var temp = document.getElementsByClassName('ewmenu')[0];
-temp = temp.getElementsByTagName('span')[0];
-temp.onclick = showHideSubMenu;
-
-//==================================================================
-//add functionality to submenu
-//==================================================================
-temp = document.getElementsByClassName('ewsubmenu')[0];
-temp = temp.getElementsByTagName('div');
-for (var i = 0; i < temp.length; i++) {
-	var attr = temp[i].getAttribute('option');
-	if(attr == 'top') {
-		temp[i].onclick = function() {
-			document.body.scrollTop = 0;
-		}
-	} else if(attr == 'blacklist') {
-		//blacklist current url
+	var target = document.getElementById('toc_');
+	if (target != null) {
+		target.style.display = 'none';
+		document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
 	}
 }
+
+// Code to enable Move to top functionality
+document.getElementsByClassName('movetotop')[0].addEventListener('click', function() {
+	document.body.scrollTop = 0;
+});
+
 
 //==================================================================
 // Get Content section from the wiki and add it as a context menu
@@ -206,8 +213,41 @@ window.onload = function() {
 		var temp = document.getElementById('toctitle');
 		temp.parentNode.removeChild(temp);
 	}
-};
 
+<<<<<<< HEAD
+	// Add listener to cmenu img
+	document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
+		var source = document.getElementsByClassName('ewcmenu')[0];
+		var target = document.getElementById('toc_');
+		if (typeof target != undefined
+			&& target != null) {
+			var state = source.getAttribute('state');
+			if (typeof state == undefined)
+				state = 'inactive';
+			if (state == 'inactive') {
+				// Need to show
+				target.style.display = 'block';
+				source.setAttribute('state', 'active');
+			} else {
+				target.style.display = 'none';
+				source.setAttribute('state', 'inactive');
+			}
+			//hideSubMenu();	
+		}
+	});
+
+	// Add listeners to internal links
+	var links = document.getElementById('toc_').getElementsByTagName('a');
+	var i;
+	for (i = 0; i < links.length; i++) {
+		if (links[i].href.indexOf('#') !== -1) {
+			links[i].addEventListener('click', function() {
+				setTimeout(function() {
+					document.getElementById('easywiki').style.top =  '2px';
+				}, 300);
+			});
+		}
+=======
 // Add listener to cmenu img
 document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
 	var source = document.getElementsByClassName('ewcmenu')[0];
@@ -223,9 +263,10 @@ document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function
 	} else {
 		target.style.display = 'none';
 		source.setAttribute('state', 'inactive');
+>>>>>>> master
 	}
-	hideSubMenu();
-});
+};
+
 	
 
 

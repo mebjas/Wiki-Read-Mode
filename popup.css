@@ -107,4 +107,13 @@ div.final {
 	padding: 15px 37px 16px 37px;
 	-webkit-transition: left .6s;
 }
-
+.logoimg {
+	display: inline-block;
+	width: 36px;
+	height: 36px;
+	background-image: url(./icons/pencil.png);
+	background-size: 36px 36px;
+	margin-left: 10px;
+	float: left;
+	-webkit-transition: background-image .4s;
+}

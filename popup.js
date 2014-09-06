@@ -90,10 +90,22 @@ $(document).ready(function() {
 	});
 });
 
+// Animation during saving config
+function saveAnimation() {
+	var icon1 = "./icons/pencil.png";
+	var icon2 = "./icon.png";
+	$('.logoimg').css('background-image', "url(" +icon2 +")");
+	//chrome.browserAction.setIcon({path: icon1});
+	setTimeout(function() {
+		$('.logoimg').css('background-image', "url(" +icon1 +")");
+		//chrome.browserAction.setIcon({path: icon2});
+	}, 500);
+}
 
 //function to pass the configuration to content script
 function passData() {
-	console.log(property);
+	//console.log(property);
+	
 
 	//send the data as a message
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
@@ -103,7 +115,7 @@ function passData() {
 	  	try {
 		    if (response.ack != undefined) {
 		    	if (response.ack === true)
-		    		showSavedMessage();
+		    		saveAnimation();
 		    }
 		} catch (err) {
 			
@@ -113,12 +125,3 @@ function passData() {
 }
 
 var t;
-
-function showSavedMessage(str) {
-	$(".ack").css("left","0px");
-	
-	clearTimeout(t);
-	t = setTimeout(function() {
-		$(".ack").css("left","-119px");
-	},3000);
-}
