@@ -54,7 +54,8 @@ function setModification() {
 		document.getElementById('mw-panel').style.display = 'none';
 	} catch (err) { /** do we need to do something about this error? **/ }
 	
-	document.getElementById('content').style.marginLeft = '10px';
+	document.getElementById('content').style.marginLeft = '50px';
+	document.getElementById('content').style.marginRight = '50px';
 	document.getElementById('content').style.fontSize = ewprops.size +'px';
 	document.getElementById('content').style.fontFamily = ewprops.font;
 }
@@ -72,6 +73,7 @@ function resetModification() {
 	} catch (err) { /** do we need to do something about this error? **/ }
 
 	document.getElementById('content').style.marginLeft = '12em';
+	document.getElementById('content').style.marginRight = '';
 	document.getElementById('content').style.fontSize = '';
 	document.getElementById('content').style.fontFamily = '';
 }
@@ -117,6 +119,19 @@ function searchew(event) {
 
 document.getElementById('ewsearch').onkeyup = searchew;
 
+// Trigger search when user clicks on search button
+document.getElementById('ewsearch').onclick = function(event) {
+    var parent_left = this.parentNode.offsetLeft;
+    var parent_top = this.parentNode.offsetTop;
+    if (event.x >= (parent_left + this.offsetLeft +this.offsetWidth - 10) 
+        && event.x <= (parent_left + this.offsetLeft +this.offsetWidth)) {
+        if (event.y >= (parent_top + this.offsetTop) 
+        && event.y <= (parent_left + this.offsetLeft +this.offsetHeight)) { 
+            searchew({which: 13});
+        }  
+    }
+};
+
 
 function hideContentMenu() {
 	var target = document.getElementById('toc_');
@@ -125,12 +140,6 @@ function hideContentMenu() {
 		document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
 	}
 }
-
-/*
-var temp = document.getElementsByClassName('ewmenu')[0];
-temp = temp.getElementsByTagName('span')[0];
-temp.onclick = showHideSubMenu;
-*/
 
 // Code to enable Move to top functionality
 document.getElementsByClassName('movetotop')[0].addEventListener('click', function() {

@@ -40,7 +40,8 @@ function modify() {
 		document.getElementById('mw-panel').style.display = 'none';
 	} catch (err) { /** do we need to do something about this error? **/ }
 
-	document.getElementById('content').style.marginLeft = '10px';
+	document.getElementById('content').style.marginLeft = '50px';
+	document.getElementById('content').style.marginRight = '50px';
 	document.getElementById('content').style.fontSize = ewprops.size +'px';
 	document.getElementById('content').style.fontFamily = ewprops.font;
 	document.getElementById('ewcheckbox').checked = true;
@@ -61,6 +62,7 @@ function resetModification()
 		} catch (err) { /** do we need to do something about this error? **/ }
 
 		document.getElementById('content').style.marginLeft = '12em';
+		document.getElementById('content').style.marginRight = '';
 		document.getElementById('content').style.fontSize = '';
 		document.getElementById('content').style.fontFamily = '';
 

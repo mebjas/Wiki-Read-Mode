@@ -105,8 +105,8 @@ function saveAnimation() {
 //function to pass the configuration to content script
 function passData() {
 	//console.log(property);
-	saveAnimation();
 	
+
 	//send the data as a message
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
 	  chrome.tabs.sendMessage(tabs[0].id, property, function(response) {
@@ -115,7 +115,7 @@ function passData() {
 	  	try {
 		    if (response.ack != undefined) {
 		    	if (response.ack === true)
-		    		showSavedMessage();
+		    		saveAnimation();
 		    }
 		} catch (err) {
 			
@@ -125,12 +125,3 @@ function passData() {
 }
 
 var t;
-
-function showSavedMessage(str) {
-	$(".ack").css("left","0px");
-	
-	clearTimeout(t);
-	t = setTimeout(function() {
-		$(".ack").css("left","-119px");
-	},3000);
-}
