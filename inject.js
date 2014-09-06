@@ -214,7 +214,6 @@ window.onload = function() {
 		temp.parentNode.removeChild(temp);
 	}
 
-<<<<<<< HEAD
 	// Add listener to cmenu img
 	document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
 		var source = document.getElementsByClassName('ewcmenu')[0];
@@ -247,25 +246,30 @@ window.onload = function() {
 				}, 300);
 			});
 		}
-=======
-// Add listener to cmenu img
-document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
-	var source = document.getElementsByClassName('ewcmenu')[0];
-	var target = document.getElementById('toc_');
-	var state = source.getAttribute('state');
-	if (typeof state == undefined
-		&& state != null)
-		state = 'inactive';
-	if (state == 'inactive') {
-		// Need to show
-		target.style.display = 'block';
-		source.setAttribute('state', 'active');
-	} else {
-		target.style.display = 'none';
-		source.setAttribute('state', 'inactive');
->>>>>>> master
-	}
+    }
+    
+    /* Add listener to cmenu img
+    document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
+        var source = document.getElementsByClassName('ewcmenu')[0];
+        var target = document.getElementById('toc_');
+        var state = source.getAttribute('state');
+        if (typeof state == undefined
+            && state != null)
+            state = 'inactive';
+        if (state == 'inactive') {
+            // Need to show
+            target.style.display = 'block';
+            source.setAttribute('state', 'active');
+        } else {
+            target.style.display = 'none';
+            source.setAttribute('state', 'inactive');
+        }
+    });
+    */
+    
 };
+
+
 
 	
 
