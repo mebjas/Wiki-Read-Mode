@@ -11,7 +11,7 @@ How to use or contribute
 ==========
 1. Simply install from [Chrome store](https://chrome.google.com/webstore/detail/wikipedia-read-mode/icnpgdbaooggmkndmiaogcokgmpdfdmc).
  
-```OR```
+###OR
 
 1. Clone this repo
 2. compress the folder to a zip
