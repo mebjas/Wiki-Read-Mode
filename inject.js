@@ -235,7 +235,7 @@ window.onload = function() {
 		}
 	});
 
-	// Add listeners to internal links
+    // Add listeners to internal links
 	var links = document.getElementById('toc_').getElementsByTagName('a');
 	var i;
 	for (i = 0; i < links.length; i++) {
@@ -266,6 +266,13 @@ window.onload = function() {
         }
     });
     */
+    
+    // adding event listener to shift + R button to minimize/maximize the read mode
+    document.onkeypress = function(e) {
+        if (e.shiftKey && e.which == 82) {
+            document.getElementById('ewcheckbox').click();
+        }
+    };
     
 };
 
