@@ -32,8 +32,4 @@ Features:
 
 Screenshots:
 ============
-![Screenshot of Popup of easyWiki](http://cistoner.org/blog/minhaz/wp-content/uploads/2014/05/scn.png)<br>
-**ReadMode ON**
-![Screenshot with ReadMode ON](http://cistoner.org/blog/minhaz/wp-content/uploads/2014/07/Screen-Shot-2014-07-12-at-8.00.03-pm-1024x530.png)<br>
-**ReadMode OFF**
-![Screenshot with ReadMode OFF](http://cistoner.org/blog/minhaz/wp-content/uploads/2014/05/sc41-1024x485.png)
+Will be added soon!
