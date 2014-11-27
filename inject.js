@@ -18,6 +18,9 @@ var ewprops = {
 
 // For ajax search capability
 var xhr = new XMLHttpRequest();
+var xhr_timeout;
+// timeout for searching, and showing slow search message
+var timeout_freq = 3000;
 
 
 if (localStorage['ew_enabled'] 
@@ -119,6 +122,8 @@ function searchew(event) {
 	if (event.which == 13 && source.value.length) {
 		window.location.href = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
 	} else if (source.value.length){
+		clearTimeout(xhr_timeout);
+
         var url = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
         // Abort existing operation
         xhr.abort();
@@ -127,6 +132,10 @@ function searchew(event) {
         xhr.url = url;
         xhr.searchKey = source.value;
         xhr.send();
+        
+        // call the timeout for slow search
+        xhr_timeout = setTimeout(function() {showtimeoutmessageXHR();}, timeout_freq);
+
         document.getElementById('searchsuggestions').style.display = 'block';
         document.getElementsByClassName('ew_search_title')[0].innerHTML = 'Searching: ' +source.value;
     }
@@ -137,6 +146,8 @@ xhr.onreadystatechange = XHRReadyStateChangeFunction;
 function XHRReadyStateChangeFunction() {
     document.getElementsByClassName('ew_search_title')[0].innerHTML = 'Result: ' +this.searchKey;
     if (this.readyState == 4 && this.status == 200) {
+    	clearTimeout(xhr_timeout);
+
         if (this.url == this.responseURL) {
             var c = document.createElement('html');
             c.innerHTML = this.responseText;
@@ -151,6 +162,11 @@ function XHRReadyStateChangeFunction() {
         }  
     }   
 }
+
+function showtimeoutmessageXHR() {
+	document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<div style="padding: 10px">Search is taking little longer than usual, click <a href="' +this.url +'">here</a> to go directly!</div>';
+}
+
 // Attach click listener to close button on search suggestion
 document.getElementsByClassName('ew_ss_close')[0].onclick = function() {
     document.getElementById('searchsuggestions').style.display = 'none';
