@@ -203,10 +203,7 @@ document.getElementsByClassName('movetotop')[0].addEventListener('click', functi
 });
 
 
-//==================================================================
-// Get Content section from the wiki and add it as a context menu
-//==================================================================
-window.onload = function() {
+function addEWContextMenu() {
 	var content = document.getElementById('toc');
 	if (typeof content != undefined
 		&& content != null) {
@@ -222,12 +219,32 @@ window.onload = function() {
 		// Insert to DOM
 		document.body.appendChild(contentObj);
 
+		// now change the position according to the position of 
+		// main easywiki box
+		contentObj.style.left = document.getElementById('easywiki').offsetLeft +'px';
+
 		//Now change directly
 		var contentObj = document.getElementById('toc_');
 
 		// Remove title
 		var temp = document.getElementById('toctitle');
 		temp.parentNode.removeChild(temp);
+		return true;
+	}
+	return false;
+}
+
+
+//==================================================================
+// Get Content section from the wiki and add it as a context menu
+//==================================================================
+window.onload = function() {
+	if (!addEWContextMenu()) {
+		setTimeout(function() {
+			addEWContextMenu();
+			// ^ reattempt incase previos attempt failed
+			// after 3 seconds
+		}, 3000);
 	}
 
 	// Add listener to cmenu img
