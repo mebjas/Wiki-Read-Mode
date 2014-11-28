@@ -90,11 +90,12 @@ function isBlackListed()
 var menuIcon = chrome.extension.getURL("icons/navicon.png");
 var downIcon = chrome.extension.getURL("icons/chevron-down.png");
 var upIcon = chrome.extension.getURL("icons/chevron-up.png");
+var searchIcon = chrome.extension.getURL("icons/search-ltr.png");
 
 // #todo: change state to inactive by default
 var newDiv = "<div id='easywiki'><img src='"
 			+menuIcon
-			+"' class='ewcmenu px20img' state='inactive' title='View Contents'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search'> <div class='ewmenu'><span>"
+			+"' class='ewcmenu px20img' state='inactive' title='View Contents'><input type='checkbox' id='ewcheckbox' onchange='checkChange()'> Read Mode | <input type='text' id='ewsearch' placeholder='Search' style='background-image: url(" +searchIcon +")'> <div class='ewmenu'><span>"
 			+"<img src='" +upIcon +"' class='movetotop px20img' title='Move to top'>"
 			+"</span></div></div>"
             +"<div id='searchsuggestions'><div class='ew_ss_header'><span class='ew_search_title'>Search Suggestions</span>"

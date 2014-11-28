@@ -134,7 +134,8 @@ function searchew(event) {
         xhr.send();
         
         // call the timeout for slow search
-        xhr_timeout = setTimeout(function() {showtimeoutmessageXHR();}, timeout_freq);
+        var lasturl = url;
+        xhr_timeout = setTimeout(function() {showtimeoutmessageXHR(lasturl);}, timeout_freq);
 
         document.getElementById('searchsuggestions').style.display = 'block';
         document.getElementsByClassName('ew_search_title')[0].innerHTML = 'Searching: ' +source.value;
@@ -163,8 +164,8 @@ function XHRReadyStateChangeFunction() {
     }   
 }
 
-function showtimeoutmessageXHR() {
-	document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<div style="padding: 10px">Search is taking little longer than usual, click <a href="' +this.url +'">here</a> to go directly!</div>';
+function showtimeoutmessageXHR(url) {
+	document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<div style="padding: 10px">Search is taking little longer than usual, click <a href="' +url +'">here</a> to go directly!</div>';
 }
 
 // Attach click listener to close button on search suggestion
@@ -222,6 +223,8 @@ function addEWContextMenu() {
 		// now change the position according to the position of 
 		// main easywiki box
 		contentObj.style.left = document.getElementById('easywiki').offsetLeft +'px';
+        contentObj.style.top = document.getElementById('easywiki').offsetHeight
+                        + document.getElementById('easywiki').offsetTop +'px';
 
 		//Now change directly
 		var contentObj = document.getElementById('toc_');
@@ -229,6 +232,40 @@ function addEWContextMenu() {
 		// Remove title
 		var temp = document.getElementById('toctitle');
 		temp.parentNode.removeChild(temp);
+        
+        // Add listener to cmenu img
+        document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
+            var source = document.getElementsByClassName('ewcmenu')[0];
+            var target = document.getElementById('toc_');
+            if (typeof target != undefined
+                && target != null) {
+                var state = source.getAttribute('state');
+                if (typeof state == undefined)
+                    state = 'inactive';
+                if (state == 'inactive') {
+                    // Need to show
+                    target.style.display = 'block';
+                    source.setAttribute('state', 'active');
+                } else {
+                    target.style.display = 'none';
+                    source.setAttribute('state', 'inactive');
+                }
+                //hideSubMenu();	
+            }
+        });
+
+        // Add listeners to internal links
+        var links = document.getElementById('toc_').getElementsByTagName('a');
+        var i;
+        for (i = 0; i < links.length; i++) {
+            if (links[i].href.indexOf('#') !== -1) {
+                links[i].addEventListener('click', function() {
+                    setTimeout(function() {
+                        document.getElementById('easywiki').style.top =  '2px';
+                    }, 300);
+                });
+            }
+        }
 		return true;
 	}
 	return false;
@@ -246,59 +283,6 @@ window.onload = function() {
 			// after 3 seconds
 		}, 3000);
 	}
-
-	// Add listener to cmenu img
-	document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
-		var source = document.getElementsByClassName('ewcmenu')[0];
-		var target = document.getElementById('toc_');
-		if (typeof target != undefined
-			&& target != null) {
-			var state = source.getAttribute('state');
-			if (typeof state == undefined)
-				state = 'inactive';
-			if (state == 'inactive') {
-				// Need to show
-				target.style.display = 'block';
-				source.setAttribute('state', 'active');
-			} else {
-				target.style.display = 'none';
-				source.setAttribute('state', 'inactive');
-			}
-			//hideSubMenu();	
-		}
-	});
-
-    // Add listeners to internal links
-	var links = document.getElementById('toc_').getElementsByTagName('a');
-	var i;
-	for (i = 0; i < links.length; i++) {
-		if (links[i].href.indexOf('#') !== -1) {
-			links[i].addEventListener('click', function() {
-				setTimeout(function() {
-					document.getElementById('easywiki').style.top =  '2px';
-				}, 300);
-			});
-		}
-    }
-    
-    /* Add listener to cmenu img
-    document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
-        var source = document.getElementsByClassName('ewcmenu')[0];
-        var target = document.getElementById('toc_');
-        var state = source.getAttribute('state');
-        if (typeof state == undefined
-            && state != null)
-            state = 'inactive';
-        if (state == 'inactive') {
-            // Need to show
-            target.style.display = 'block';
-            source.setAttribute('state', 'active');
-        } else {
-            target.style.display = 'none';
-            source.setAttribute('state', 'inactive');
-        }
-    });
-    */
     
     // adding event listener to shift + R button to minimize/maximize the read mode
     document.onkeypress = function(e) {
