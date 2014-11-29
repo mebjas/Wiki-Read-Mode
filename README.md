@@ -33,4 +33,8 @@ Features:
 
 Screenshots:
 ============
-Will be added soon!
+![Screenshot 1](https://raw.githubusercontent.com/mebjas/Wiki-Read-Mode/master/graphics/1280x800_i2.jpg)
+![Screenshot 2](https://raw.githubusercontent.com/mebjas/Wiki-Read-Mode/master/graphics/1280x800_i1.jpg)
+![Screenshot 3](https://raw.githubusercontent.com/mebjas/Wiki-Read-Mode/master/graphics/1280x800_i3.jpg)
+![Screenshot 4](https://raw.githubusercontent.com/mebjas/Wiki-Read-Mode/master/graphics/1280x800_i4.jpg)
+
