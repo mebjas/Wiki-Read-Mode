@@ -307,6 +307,11 @@ setTimeout(function() {
 }, 1000);
 
 
+// Adjust menu position on window resize
+window.onresize = function() {
+	document.getElementById('toc_').style.left = document.getElementById('easywiki').offsetLeft +'px';
+};
+
 
 	
 
