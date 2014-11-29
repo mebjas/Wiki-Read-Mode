@@ -91,6 +91,7 @@ var menuIcon = chrome.extension.getURL("icons/navicon.png");
 var downIcon = chrome.extension.getURL("icons/chevron-down.png");
 var upIcon = chrome.extension.getURL("icons/chevron-up.png");
 var searchIcon = chrome.extension.getURL("icons/search-ltr.png");
+var script_url = chrome.extension.getURL("inject.js");
 
 // #todo: change state to inactive by default
 var newDiv = "<div id='easywiki'><img src='"
@@ -105,18 +106,9 @@ document.body.innerHTML += newDiv;
 //document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Never Modify this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
 
 //code to inject the script to wikipedia 
-function reqListener () {
-	var script_ew = document.createElement('script');
-	script_ew.textContent = this.responseText;
-	(document.head||document.documentElement).appendChild(script_ew);
-}
-
-var url = chrome.extension.getURL("inject.js");
-var xhrObj = new XMLHttpRequest();
-xhrObj.onload = reqListener;
-xhrObj.open("GET",url);
-xhrObj.send();
-
+var script_ew = document.createElement('script');
+script_ew.src = script_url;
+(document.head||document.documentElement).appendChild(script_ew);
 
 
 //trigger the modifying function

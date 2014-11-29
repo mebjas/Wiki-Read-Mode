@@ -232,57 +232,57 @@ function addEWContextMenu() {
 		// Remove title
 		var temp = document.getElementById('toctitle');
 		temp.parentNode.removeChild(temp);
-        
-        // Add listener to cmenu img
-        document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
-            var source = document.getElementsByClassName('ewcmenu')[0];
-            var target = document.getElementById('toc_');
-            if (typeof target != undefined
-                && target != null) {
-                var state = source.getAttribute('state');
-                if (typeof state == undefined)
-                    state = 'inactive';
-                if (state == 'inactive') {
-                    // Need to show
-                    target.style.display = 'block';
-                    source.setAttribute('state', 'active');
-                } else {
-                    target.style.display = 'none';
-                    source.setAttribute('state', 'inactive');
-                }
-                //hideSubMenu();	
-            }
-        });
 
-        // Add listeners to internal links
-        var links = document.getElementById('toc_').getElementsByTagName('a');
-        var i;
-        for (i = 0; i < links.length; i++) {
-            if (links[i].href.indexOf('#') !== -1) {
-                links[i].addEventListener('click', function() {
-                    setTimeout(function() {
-                        document.getElementById('easywiki').style.top =  '2px';
-                    }, 300);
-                });
-            }
-        }
+		// Add listeners to internal links
+	    var links = document.getElementById('toc_').getElementsByTagName('a');
+	    var i;
+	    for (i = 0; i < links.length; i++) {
+	        if (links[i].href.indexOf('#') !== -1) {
+	            links[i].addEventListener('click', function() {
+	                setTimeout(function() {
+	                    document.getElementById('easywiki').style.top =  '2px';
+	                }, 300);
+	            });
+	        }
+	    } 
 		return true;
 	}
 	return false;
 }
 
+var isMenuClickEventAttached = false;
+function addEventListenertoMenuImg() {
+	// Add listener to cmenu img
+    document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
+        var source = document.getElementsByClassName('ewcmenu')[0];
+        var target = document.getElementById('toc_');
+        if (typeof target != undefined
+            && target != null) {
+            var state = source.getAttribute('state');
+            if (typeof state == undefined)
+                state = 'inactive';
+            if (state == 'inactive') {
+                // Need to show
+                target.style.display = 'block';
+                source.setAttribute('state', 'active');
+            } else {
+                target.style.display = 'none';
+                source.setAttribute('state', 'inactive');
+            }
+            //hideSubMenu();	
+        } else {
+        	addEWContextMenu();
+        }
+    });
+    isMenuClickEventAttached = true;	
+}
 
 //==================================================================
 // Get Content section from the wiki and add it as a context menu
 //==================================================================
 window.onload = function() {
-	if (!addEWContextMenu()) {
-		setTimeout(function() {
-			addEWContextMenu();
-			// ^ reattempt incase previos attempt failed
-			// after 3 seconds
-		}, 3000);
-	}
+	addEWContextMenu();
+    addEventListenertoMenuImg();
     
     // adding event listener to shift + R button to minimize/maximize the read mode
     document.onkeypress = function(e) {
@@ -292,6 +292,19 @@ window.onload = function() {
     };
     
 };
+
+setTimeout(function() {
+	addEWContextMenu();
+	// ^ reattempt incase previos attempt failed
+	// after 3 seconds
+	// adding event listener to shift + R button to minimize/maximize the read mode
+    document.onkeypress = function(e) {
+        if (e.shiftKey && e.which == 82) {
+            document.getElementById('ewcheckbox').click();
+        }
+    };
+	if (!isMenuClickEventAttached) addEventListenertoMenuImg();
+}, 1000);
 
 
 

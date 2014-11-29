@@ -84,6 +84,13 @@ input#ewsearch {
 #toc_ ul li ul
 {
 	display: none;
+	position: absolute;
+	top: 0px;
+	border: 1px solid rgba(0, 0, 0, 0.701961);
+	left: -284px;
+	background: rgba(0,0,0,.7);
+	width: 250px;
+	border-right: none;
 }
 .tocnumber
 {
@@ -96,13 +103,6 @@ input#ewsearch {
 }
 #toc_ ul li:hover>ul {
 	display: block;
-	position: absolute;
-	top: 0px;
-	left: -283px;
-	background: rgba(0,0,0,.7);
-	width: 250px;
-	border: 1px solid rgba(0,0,0,.7);
-	border-right: none;
 }
 #searchsuggestions {
     position: fixed;
