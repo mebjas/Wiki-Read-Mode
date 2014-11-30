@@ -123,7 +123,6 @@ function searchew(event) {
 		window.location.href = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
 	} else if (source.value.length){
 		clearTimeout(xhr_timeout);
-
         var url = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
         // Abort existing operation
         xhr.abort();
@@ -139,6 +138,9 @@ function searchew(event) {
 
         document.getElementById('searchsuggestions').style.display = 'block';
         document.getElementsByClassName('ew_search_title')[0].innerHTML = 'Searching: ' +source.value;
+    } else {
+        xhr.abort();
+        document.getElementById('searchsuggestions').style.display = 'none';
     }
 }
 
@@ -224,7 +226,7 @@ function addEWContextMenu() {
 		// main easywiki box
 		contentObj.style.left = document.getElementById('easywiki').offsetLeft +'px';
         contentObj.style.top = document.getElementById('easywiki').offsetHeight
-                        + document.getElementById('easywiki').offsetTop +'px';
+                        + 2 +'px';
 
 		//Now change directly
 		var contentObj = document.getElementById('toc_');
