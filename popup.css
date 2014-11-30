@@ -117,3 +117,8 @@ div.final {
 	float: left;
 	-webkit-transition: background-image .4s;
 }
+.share {
+	float: left;
+	margin-top: 4px;
+	cursor: pointer;
+}

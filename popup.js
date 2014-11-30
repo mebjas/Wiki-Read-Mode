@@ -88,6 +88,16 @@ $(document).ready(function() {
 		//pass this as message to active tabs
 		passData();
 	});
+
+	$(".sh").on('click', function() {
+		var newURL;
+		var data = $(this).attr("data");
+		if (data == 'fb') newURL = "https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fcistoner.org%2Fprojects%2Feasywiki%2F";
+		else if (data == 'twitter') newURL = "https://twitter.com/home?status=Try%20Easywiki%20-%20an%20easier,%20more%20user%20friendly%20wikipedia!%20%23easywiki%20%23cistoner%0Ahttp://cistoner.org/projects/easywiki";
+    	else if (data == 'gplus') newURL = "https://plus.google.com/share?url=cistoner.org/projects/easywiki";
+    	else return;
+    	chrome.tabs.create({ url: newURL });
+    });
 });
 
 // Animation during saving config
