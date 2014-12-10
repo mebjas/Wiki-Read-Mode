@@ -1,7 +1,7 @@
 {
   "name": "Wikipedia Read Mode",
   "description": "Enable Read Mode on wikipedia to make it more readable and user friendly!",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "short_name": "EasyWiki",
   
   "permissions": [
@@ -20,6 +20,10 @@
     "inject.js",
     "icons/*"
   ],
+  "icons": {
+      "128": "icons/icon128x128.png",
+      "48": "icons/icon48x48.png"
+   },
   "browser_action": {
     "default_title": "",
     "default_icon": "icon.png",
