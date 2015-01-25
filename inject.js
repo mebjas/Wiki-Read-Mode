@@ -1,19 +1,21 @@
 /**
  * Wikipedia Read Mode, inject.js
  * This script will be injected to the wikipedia page
- * And it will function as a wiki script rather than a content 
+ * And it will function as a wiki script rather than a content
  * Script
  */
 
 
 //==================================================================
 // loading properties from localStorage
-//================================================================== 
+//==================================================================
 
 var ewprops = {
-	enabled: true,
-	font: "Calibri",
-	size: 30
+    enabled: true,
+    font: "Calibri",
+    size: 30,
+    reference: 0,
+    links: 0
 }
 
 // For ajax search capability
@@ -23,15 +25,21 @@ var xhr_timeout;
 var timeout_freq = 3000;
 
 
-if (localStorage['ew_enabled'] 
-	&& localStorage['ew_enabled'] == "false") {
-	ewprops.enabled = false;
+if (localStorage['ew_enabled']
+    && localStorage['ew_enabled'] == "false") {
+    ewprops.enabled = false;
 }
 if (localStorage['ew_font']) {
-	ewprops.font = localStorage['ew_font'];
+    ewprops.font = localStorage['ew_font'];
 }
 if (localStorage['ew_size']) {
-	ewprops.size = localStorage['ew_size'];
+    ewprops.size = localStorage['ew_size'];
+}
+if (localStorage['ew_reference']) {
+    ewprops.reference = localStorage['ew_reference'];
+}
+if (localStorage['ew_links']) {
+    ewprops.links = localStorage['ew_links'];
 }
 
 //==================================================================
@@ -40,55 +48,93 @@ if (localStorage['ew_size']) {
 
 //function to refref the properties
 function refreshProperty() {
-	if (localStorage['ew_font']) {
-		ewprops.font = localStorage['ew_font'];
-	}
-	if (localStorage['ew_size']) {
-		ewprops.size = localStorage['ew_size'];
-	}
+    if (localStorage['ew_font']) {
+        ewprops.font = localStorage['ew_font'];
+    }
+    if (localStorage['ew_size']) {
+        ewprops.size = localStorage['ew_size'];
+    }
+    if (localStorage['ew_reference']) {
+        ewprops.reference = localStorage['ew_reference'];
+    }
+    if (localStorage['ew_links']) {
+        ewprops.links = localStorage['ew_links'];
+    }
 }
 
 //add a function to reset the modifications
 function setModification() {
-	//refresh property first
-	refreshProperty();
+    //refresh property first
+    refreshProperty();
 
-	try { 
-		document.getElementsByClassName('infobox')[0].style.display = 'none';
-	} catch (err) { /** do we need to do something about this error? **/ }
+    try {
+        document.getElementsByClassName('infobox')[0].style.display = 'none';
+    } catch (err) { /** do we need to do something about this error? **/ }
 
-	try {
-		document.getElementById('mw-panel').style.display = 'none';
-	} catch (err) { /** do we need to do something about this error? **/ }
-	
-	document.getElementById('content').style.marginLeft = '50px';
-	document.getElementById('content').style.marginRight = '50px';
-	document.getElementById('content').style.fontSize = ewprops.size +'px';
-	document.getElementById('content').style.fontFamily = ewprops.font;
+    try {
+        document.getElementById('mw-panel').style.display = 'none';
+    } catch (err) { /** do we need to do something about this error? **/ }
+
+    document.getElementById('content').style.marginLeft = '50px';
+    document.getElementById('content').style.marginRight = '50px';
+    document.getElementById('content').style.fontSize = ewprops.size +'px';
+    document.getElementById('content').style.fontFamily = ewprops.font;
+    if(ewprops.reference) {
+        //remove references
+        var references = document.getElementsByClassName('reference');
+        for(var i = references.length -1; i>=0; i--) {
+            references[i].style.display = "none";
+        }
+    } else {
+        //add references back
+        var references = document.getElementsByClassName('reference');
+        for(var i = references.length -1; i>=0; i--) {
+            references[i].style.display = "";
+        }
+    }
+    if(ewprops.links) {
+        var links = document.getElementsByTagName("a");
+        for(var i = links.length -1; i>=0; i--) {
+            links[i].setAttribute("style", "color:#000000")
+        }
+    } else {
+        var links = document.getElementsByTagName("a");
+        for(var i = links.length -1; i>=0; i--) {
+            links[i].setAttribute("style", "color:#0645ad")
+        }
+    }
 }
 
 //reset modifications done by the set function
 function resetModification() {
-	try { 
-		document.getElementsByClassName('infobox')[0].style.display = '';
-	} catch (err) {
-		/** do we need to do something about this error? **/
-	}
+    try {
+        document.getElementsByClassName('infobox')[0].style.display = '';
+    } catch (err) {
+        /** do we need to do something about this error? **/
+    }
 
-	try {
-		document.getElementById('mw-panel').style.display = '';
-	} catch (err) { /** do we need to do something about this error? **/ }
+    try {
+        document.getElementById('mw-panel').style.display = '';
+    } catch (err) { /** do we need to do something about this error? **/ }
 
-	document.getElementById('content').style.marginLeft = '12em';
-	document.getElementById('content').style.marginRight = '';
-	document.getElementById('content').style.fontSize = '';
-	document.getElementById('content').style.fontFamily = '';
+    document.getElementById('content').style.marginLeft = '12em';
+    document.getElementById('content').style.marginRight = '';
+    document.getElementById('content').style.fontSize = '';
+    document.getElementById('content').style.fontFamily = '';
+    var references = document.getElementsByClassName('reference');
+    for(var i = references.length -1; i>=0; i--) {
+        references[i].style.display = "";
+    }
+    var links = document.getElementsByTagName("a");
+    for(var i = links.length -1; i>=0; i--) {
+        links[i].setAttribute("style", "color:#0645ad")
+    }
 }
 
 //called by checkbox, for readmode in UI
 function checkChange() {
-	if (document.getElementById('ewcheckbox').checked) setModification();
-	else resetModification();
+    if (document.getElementById('ewcheckbox').checked) setModification();
+    else resetModification();
 }
 
 /**
@@ -97,18 +143,18 @@ function checkChange() {
 var y1 = -50;var y2 = 2;
 var currentPos = document.body.scrollTop;
 function monitor(event){
-	var dy = (currentPos - document.body.scrollTop) / 2;
-	if (document.getElementById('easywiki').style.top == '')
-		document.getElementById('easywiki').style.top = '2px';
-	var y = parseInt(document.getElementById('easywiki').style.top) + dy;
-	if (y > y2) y = y2;
-	if (y < y1) y = y1;
-	currentPos = document.body.scrollTop;
-	document.getElementById('easywiki').style.top = y + 'px';
+    var dy = (currentPos - document.body.scrollTop) / 2;
+    if (document.getElementById('easywiki').style.top == '')
+        document.getElementById('easywiki').style.top = '2px';
+    var y = parseInt(document.getElementById('easywiki').style.top) + dy;
+    if (y > y2) y = y2;
+    if (y < y1) y = y1;
+    currentPos = document.body.scrollTop;
+    document.getElementById('easywiki').style.top = y + 'px';
 
-	//hide menu
-	//hideSubMenu();
-	hideContentMenu();
+    //hide menu
+    //hideSubMenu();
+    hideContentMenu();
 }
 document.body.onscroll = monitor;
 
@@ -117,12 +163,12 @@ document.body.onscroll = monitor;
  * Adding search capability to easywiki
  */
 function searchew(event) {
-	var source = document.getElementById('ewsearch');
+    var source = document.getElementById('ewsearch');
 
-	if (event.which == 13 && source.value.length) {
-		window.location.href = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
-	} else if (source.value.length){
-		clearTimeout(xhr_timeout);
+    if (event.which == 13 && source.value.length) {
+        window.location.href = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
+    } else if (source.value.length){
+        clearTimeout(xhr_timeout);
         var url = "http://en.wikipedia.org/wiki/w/index.php?search=" +source.value;
         // Abort existing operation
         xhr.abort();
@@ -131,7 +177,7 @@ function searchew(event) {
         xhr.url = url;
         xhr.searchKey = source.value;
         xhr.send();
-        
+
         // call the timeout for slow search
         var lasturl = url;
         xhr_timeout = setTimeout(function() {showtimeoutmessageXHR(lasturl);}, timeout_freq);
@@ -149,7 +195,7 @@ xhr.onreadystatechange = XHRReadyStateChangeFunction;
 function XHRReadyStateChangeFunction() {
     document.getElementsByClassName('ew_search_title')[0].innerHTML = 'Result: ' +this.searchKey;
     if (this.readyState == 4 && this.status == 200) {
-    	clearTimeout(xhr_timeout);
+        clearTimeout(xhr_timeout);
 
         if (this.url == this.responseURL) {
             var c = document.createElement('html');
@@ -159,15 +205,15 @@ function XHRReadyStateChangeFunction() {
             document.getElementById('searchsuggestions').style.display = 'block';
         } else {
             document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<ul><li>Direct match found for: ' +this.searchKey
-                +', press on search button or click <a href="' +this.url
-                +'">here</a> to go to this content!</li></ul>';
+            +', press on search button or click <a href="' +this.url
+            +'">here</a> to go to this content!</li></ul>';
             document.getElementById('searchsuggestions').style.display = 'block';
-        }  
-    }   
+        }
+    }
 }
 
 function showtimeoutmessageXHR(url) {
-	document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<div style="padding: 10px">Search is taking little longer than usual, click <a href="' +url +'">here</a> to go directly!</div>';
+    document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<div style="padding: 10px">Search is taking little longer than usual, click <a href="' +url +'">here</a> to go directly!</div>';
 }
 
 // Attach click listener to close button on search suggestion
@@ -182,79 +228,79 @@ document.getElementById('ewsearch').onkeyup = searchew;
 document.getElementById('ewsearch').onclick = function(event) {
     var parent_left = this.parentNode.offsetLeft;
     var parent_top = this.parentNode.offsetTop;
-    if (event.x >= (parent_left + this.offsetLeft +this.offsetWidth - 10) 
+    if (event.x >= (parent_left + this.offsetLeft +this.offsetWidth - 10)
         && event.x <= (parent_left + this.offsetLeft +this.offsetWidth)) {
-        if (event.y >= (parent_top + this.offsetTop) 
-        && event.y <= (parent_left + this.offsetLeft +this.offsetHeight)) { 
+        if (event.y >= (parent_top + this.offsetTop)
+            && event.y <= (parent_left + this.offsetLeft +this.offsetHeight)) {
             searchew({which: 13});
-        }  
+        }
     }
 };
 
 
 function hideContentMenu() {
-	var target = document.getElementById('toc_');
-	if (target != null) {
-		target.style.display = 'none';
-		document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
-	}
+    var target = document.getElementById('toc_');
+    if (target != null) {
+        target.style.display = 'none';
+        document.getElementsByClassName('ewcmenu')[0].setAttribute('state', 'inactive');
+    }
 }
 
 // Code to enable Move to top functionality
 document.getElementsByClassName('movetotop')[0].addEventListener('click', function() {
-	document.body.scrollTop = 0;
+    document.body.scrollTop = 0;
 });
 
 
 function addEWContextMenu() {
-	var content = document.getElementById('toc');
-	if (typeof content != undefined
-		&& content != null) {
-		var contentObj = document.createElement('div');
-		contentObj.className = "toc";
-		contentObj.setAttribute("id", "toc_");
-		contentObj.innerHTML = content.innerHTML;
+    var content = document.getElementById('toc');
+    if (typeof content != undefined
+        && content != null) {
+        var contentObj = document.createElement('div');
+        contentObj.className = "toc";
+        contentObj.setAttribute("id", "toc_");
+        contentObj.innerHTML = content.innerHTML;
 
-		// Remove the content menu from actual UI
-		content.parentNode.removeChild(content);
+        // Remove the content menu from actual UI
+        content.parentNode.removeChild(content);
 
-		// Modify the new content menu to suit our need
-		// Insert to DOM
-		document.body.appendChild(contentObj);
+        // Modify the new content menu to suit our need
+        // Insert to DOM
+        document.body.appendChild(contentObj);
 
-		// now change the position according to the position of 
-		// main easywiki box
-		contentObj.style.left = document.getElementById('easywiki').offsetLeft +'px';
+        // now change the position according to the position of
+        // main easywiki box
+        contentObj.style.left = document.getElementById('easywiki').offsetLeft +'px';
         contentObj.style.top = document.getElementById('easywiki').offsetHeight
-                        + 2 +'px';
+        + 2 +'px';
 
-		//Now change directly
-		var contentObj = document.getElementById('toc_');
+        //Now change directly
+        var contentObj = document.getElementById('toc_');
 
-		// Remove title
-		var temp = document.getElementById('toctitle');
-		temp.parentNode.removeChild(temp);
+        // Remove title
+        var temp = document.getElementById('toctitle');
+        temp.parentNode.removeChild(temp);
 
-		// Add listeners to internal links
-	    var links = document.getElementById('toc_').getElementsByTagName('a');
-	    var i;
-	    for (i = 0; i < links.length; i++) {
-	        if (links[i].href.indexOf('#') !== -1) {
-	            links[i].addEventListener('click', function() {
-	                setTimeout(function() {
-	                    document.getElementById('easywiki').style.top =  '2px';
-	                }, 300);
-	            });
-	        }
-	    } 
-		return true;
-	}
-	return false;
+        // Add listeners to internal links
+        var links = document.getElementById('toc_').getElementsByTagName('a');
+        var i;
+        for (i = 0; i < links.length; i++) {
+            if (links[i].href.indexOf('#') !== -1) {
+                links[i].addEventListener('click', function() {
+                    setTimeout(function() {
+                        document.getElementById('easywiki').style.top =  '2px';
+                    }, 300);
+                });
+            }
+        }
+        return true;
+    }
+    return false;
 }
 
 var isMenuClickEventAttached = false;
 function addEventListenertoMenuImg() {
-	// Add listener to cmenu img
+    // Add listener to cmenu img
     document.getElementsByClassName('ewcmenu')[0].addEventListener('click', function() {
         var source = document.getElementsByClassName('ewcmenu')[0];
         var target = document.getElementById('toc_');
@@ -271,50 +317,50 @@ function addEventListenertoMenuImg() {
                 target.style.display = 'none';
                 source.setAttribute('state', 'inactive');
             }
-            //hideSubMenu();	
+            //hideSubMenu();
         } else {
-        	addEWContextMenu();
+            addEWContextMenu();
         }
     });
-    isMenuClickEventAttached = true;	
+    isMenuClickEventAttached = true;
 }
 
 //==================================================================
 // Get Content section from the wiki and add it as a context menu
 //==================================================================
 window.onload = function() {
-	addEWContextMenu();
+    addEWContextMenu();
     addEventListenertoMenuImg();
-    
+
     // adding event listener to shift + R button to minimize/maximize the read mode
     document.onkeypress = function(e) {
         if (e.shiftKey && e.which == 82) {
             document.getElementById('ewcheckbox').click();
         }
     };
-    
+
 };
 
 setTimeout(function() {
-	addEWContextMenu();
-	// ^ reattempt incase previos attempt failed
-	// after 3 seconds
-	// adding event listener to shift + R button to minimize/maximize the read mode
+    addEWContextMenu();
+    // ^ reattempt incase previos attempt failed
+    // after 3 seconds
+    // adding event listener to shift + R button to minimize/maximize the read mode
     document.onkeypress = function(e) {
         if (e.shiftKey && e.which == 82) {
             document.getElementById('ewcheckbox').click();
         }
     };
-	if (!isMenuClickEventAttached) addEventListenertoMenuImg();
+    if (!isMenuClickEventAttached) addEventListenertoMenuImg();
 }, 1000);
 
 
 // Adjust menu position on window resize
 window.onresize = function() {
-	document.getElementById('toc_').style.left = document.getElementById('easywiki').offsetLeft +'px';
+    document.getElementById('toc_').style.left = document.getElementById('easywiki').offsetLeft +'px';
 };
 
 
-	
+
 
 
