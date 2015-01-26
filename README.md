@@ -29,6 +29,8 @@ Features:
 - [x] Hides the left sidebar (basically useless) while in readmode.
 - [x] Certain sites which serves as intermediate, for ex: `MAIN_PAGE` are blaclisted, they aren't modified to readmode by default
 - [x] Inpage menu show / hides depending on scroll (similar to search bar in google now).
+- [x] Show / Hide links in the article. (@todo: add a shortcut for this)
+- [x] Show / Hide references in the article. (@todo: add a shortcut for this)
 - [ ] Set any page to `Never Modify this page` Mode
 
 Screenshots:

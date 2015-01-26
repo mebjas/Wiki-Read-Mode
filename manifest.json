@@ -1,7 +1,7 @@
 {
   "name": "Wikipedia Read Mode",
   "description": "Enable Read Mode on wikipedia to make it more readable and user friendly!",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "short_name": "EasyWiki",
   
   "permissions": [
