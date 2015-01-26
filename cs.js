@@ -8,6 +8,7 @@ var ewprops = {
     reference: 0,
     links: 0
 }
+
 if (localStorage['ew_enabled'] && localStorage['ew_enabled'] == "false") {
     ewprops.enabled = false;
 }
@@ -53,28 +54,37 @@ function modify() {
     document.getElementById('content').style.fontSize = ewprops.size +'px';
     document.getElementById('content').style.fontFamily = ewprops.font;
     document.getElementById('ewcheckbox').checked = true;
-    if(ewprops.reference) {
+
+    if(parseInt(ewprops.reference)) {
         //remove references
         var references = document.getElementsByClassName('reference');
-        for(var i = references.length -1; i>=0; i--) {
+        for(var i = references.length -1; i >=  0; i--) {
             references[i].style.display = "none";
         }
     } else {
         //add references back
         var references = document.getElementsByClassName('reference');
-        for(var i = references.length -1; i>=0; i--) {
+        for(var i = references.length -1; i >= 0; i--) {
             references[i].style.display = "";
         }
     }
-    if(ewprops.links) {
-        var links = document.getElementsByTagName("a");
-        for(var i = links.length -1; i>=0; i--) {
-            links[i].setAttribute("style", "color:#000000")
+
+    var bigContainer = document.getElementById('content');
+    if(parseInt(ewprops.links)) {
+        var links = bigContainer.getElementsByTagName("a");
+        for(var i = links.length -1; i >= 0; i--) {
+            // add the class distractionfree to the links
+            var _class = links[i].getAttribute('class');
+            _class = (_class == null) ? 'distractionfree' : _class +' distractionfree';
+            links[i].className = _class;
         }
     } else {
-        var links = document.getElementsByTagName("a");
-        for(var i = links.length -1; i>=0; i--) {
-            links[i].setAttribute("style", "color:#0645ad")
+        var links = bigContainer.getElementsByTagName("a");
+        for(var i = links.length -1; i >= 0; i--) {
+            var _class = links[i].getAttribute('class');
+            if (_class != null) {
+                links[i].className = _class.replace('distractionfree', '')
+            }
         }
     }
 }
@@ -103,9 +113,14 @@ function resetModification()
     for(var i = references.length -1; i>=0; i--) {
         references[i].style.display = "";
     }
-    var links = document.getElementsByTagName("a");
+
+    var bigContainer = document.getElementById('content');
+    var links = bigContainer.getElementsByTagName("a");
     for(var i = links.length -1; i>=0; i--) {
-        links[i].setAttribute("style", "color:#0645ad")
+        var _class = links[i].getAttribute('class');
+        if (_class != null) {
+            links[i].className = _class.replace('distractionfree', '')
+        }
     }
 }
 
@@ -197,7 +212,8 @@ chrome.runtime.onMessage.addListener(
                 document.getElementById('content').style.fontSize = ewprops.size +'px';
                 document.getElementById('content').style.fontFamily = ewprops.font;
                 document.getElementById('ewcheckbox').checked = true;
-                if(ewprops.reference) {
+                
+                if(parseInt(ewprops.reference)) {
                     //remove references
                     var references = document.getElementsByClassName('reference');
                     for(var i = references.length -1; i>=0; i--) {
@@ -210,15 +226,22 @@ chrome.runtime.onMessage.addListener(
                         references[i].style.display = "";
                     }
                 }
-                if(ewprops.links) {
-                    var links = document.getElementsByTagName("a");
+
+                var bigContainer = document.getElementById('content');
+                if(parseInt(ewprops.links)) {
+                    var links = bigContainer.getElementsByTagName("a");
                     for(var i = links.length -1; i>=0; i--) {
-                        links[i].setAttribute("style", "color:#000000")
+                        var _class = links[i].getAttribute('class');
+                        _class = (_class == null) ? 'distractionfree' : _class +' distractionfree';
+                        links[i].className = _class;
                     }
                 } else {
-                    var links = document.getElementsByTagName("a");
+                    var links = bigContainer.getElementsByTagName("a");
                     for(var i = links.length -1; i>=0; i--) {
-                        links[i].setAttribute("style", "color:#0645ad")
+                        var _class = links[i].getAttribute('class');
+                        if (_class != null) {
+                            links[i].className = _class.replace('distractionfree', '')
+                        }
                     }
                 }
             } else {

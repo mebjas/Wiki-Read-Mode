@@ -156,3 +156,7 @@ input#ewsearch {
     background: rgba(163, 149, 149, 0.8);
     cursor: pointer;
 }
+a.distractionfree, a.distractionfree:visited, a.distractionfree:active {
+	color: black;
+	text-decoration: none;
+}
