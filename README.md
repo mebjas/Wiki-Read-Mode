@@ -4,8 +4,9 @@ Wiki Read Mode
 **Code Name: `EasyWiki`** <br>
 **Chrome Extension** to make **wikipedia or any wiki template** based website user firendly and more accessible. <br>
 **Current Status: `beta version released`**<br>
-**Latest Available verion: `0.3.0`**<br>
+**Latest Available verion: `0.3.5`**<br>
 **Installation URL:** [Chrome store](https://chrome.google.com/webstore/detail/wikipedia-read-mode/icnpgdbaooggmkndmiaogcokgmpdfdmc), [Not officialy released, but anyone with link can try]<br>
+**Project URL:** [Cistoner - projects](http://cistoner.org/projects/easywiki)
 
 ![Banner](https://raw.githubusercontent.com/mebjas/Wiki-Read-Mode/master/graphics/facebook%20publicity%20main.jpg)
 How to use or contribute
