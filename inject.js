@@ -42,6 +42,7 @@ if (localStorage['ew_links']) {
     ewprops.links = localStorage['ew_links'];
 }
 
+var loader_url = $("#__EW_image_urls").attr("loader_icon");
 //==================================================================
 // Methods that will be called by eventlisteners
 //==================================================================
@@ -176,11 +177,14 @@ function searchew(event) {
         //Add a property to xhr element
         xhr.url = url;
         xhr.searchKey = source.value;
+        $(".ew_ss_header").css("background-image", "url(" +loader_url +")");
         xhr.send();
 
         // call the timeout for slow search
         var lasturl = url;
-        xhr_timeout = setTimeout(function() {showtimeoutmessageXHR(lasturl);}, timeout_freq);
+        xhr_timeout = setTimeout(function() {
+            showtimeoutmessageXHR(lasturl, source.value);
+        }, timeout_freq);
 
         document.getElementById('searchsuggestions').style.display = 'block';
         document.getElementsByClassName('ew_search_title')[0].innerHTML = 'Searching: ' +source.value;
@@ -197,6 +201,7 @@ function XHRReadyStateChangeFunction() {
     if (this.readyState == 4 && this.status == 200) {
         clearTimeout(xhr_timeout);
 
+        $(".ew_ss_header").css("background-image", "none");
         if (this.url == this.responseURL) {
             var c = document.createElement('html');
             c.innerHTML = this.responseText;
@@ -204,16 +209,38 @@ function XHRReadyStateChangeFunction() {
             document.getElementsByClassName('ew_ss_results')[0].innerHTML = dom[0].outerHTML;
             document.getElementById('searchsuggestions').style.display = 'block';
         } else {
-            document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<ul><li>Direct match found for: ' +this.searchKey
-            +', press on search button or click <a href="' +this.url
-            +'">here</a> to go to this content!</li></ul>';
+            // Parse and get introduction
+            var tmpobj = document.createElement('html');
+            tmpobj.innerHTML = this.response;
+            var intro = $(tmpobj).find("#mw-content-text").children("p").eq(0)[0].innerText;
+
+            intro = intro.replace(/(?:\[[\d]*\])/g, '');
+
+            if (intro.indexOf('may refer to') != -1) {
+                // No possible match found
+                intro = $(tmpobj).find("#mw-content-text").children("ul")[0].outerHTML;
+            }
+
+            document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<ul><li style="list-style-type:none; list-style-image: none; margin-left: 2px;"><a href="http://en.wikipedia.org/wiki/w/index.php?search=' 
+                +this.searchKey 
+                +'" style="text-transform: capitalize">' 
+                +this.searchKey 
+                +'</a><br> ' 
+                +intro 
+                +'</li></ul>';
             document.getElementById('searchsuggestions').style.display = 'block';
         }
     }
 }
 
-function showtimeoutmessageXHR(url) {
-    document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<div style="padding: 10px">Search is taking little longer than usual, click <a href="' +url +'">here</a> to go directly!</div>';
+function showtimeoutmessageXHR(url, key) {
+    document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<div style="padding: 10px">'
+    +'<a href="'
+    + url
+    +'" style="text-transform: capitalize; line-height: 2;">'
+    +key
+    +'</a><br>'
+    +'OOPS! the search is taking little longer than usual, wait while we fetch the content for you!</div>';
 }
 
 // Attach click listener to close button on search suggestion

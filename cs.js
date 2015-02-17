@@ -145,6 +145,7 @@ var menuIcon = chrome.extension.getURL("icons/navicon.png");
 var downIcon = chrome.extension.getURL("icons/chevron-down.png");
 var upIcon = chrome.extension.getURL("icons/chevron-up.png");
 var searchIcon = chrome.extension.getURL("icons/search-ltr.png");
+var loadIcon = chrome.extension.getURL("icons/ajax-loader.gif");
 var script_url = chrome.extension.getURL("inject.js");
 
 // #todo: change state to inactive by default
@@ -155,7 +156,8 @@ var newDiv = "<div id='easywiki'><img src='"
     +"</span></div></div>"
     +"<div id='searchsuggestions'><div class='ew_ss_header'><span class='ew_search_title'>Search Suggestions</span>"
     +"<!--<span class='ew_ss_min'>-</span>--><span class='ew_ss_close'>X</span>"
-    +"</div><div class='ew_ss_results'></div></div>";
+    +"</div><div class='ew_ss_results'></div></div>"
+    +"<div id='__EW_image_urls' loader_icon='" +loadIcon +"' style='display: none;'></div>";
 document.body.innerHTML += newDiv;
 //document.getElementsByClassName('ewmenu')[0].innerHTML += "<div class='ewsubmenu'><div option='blacklist'>Never Modify this page</div><div option='top'>Move to top&nbsp;&nbsp;&uarr;</div></div>";
 
