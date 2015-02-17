@@ -237,7 +237,7 @@ function showtimeoutmessageXHR(url, key) {
     document.getElementsByClassName('ew_ss_results')[0].innerHTML = '<div style="padding: 10px">'
     +'<a href="'
     + url
-    +'" style="text-transform: capitalize; line-height: 2;">'
+    +'" style="text-transform: capitalize; line-height: 2;" target="blank">'
     +key
     +'</a><br>'
     +'OOPS! the search is taking little longer than usual, wait while we fetch the content for you!</div>';
