@@ -366,6 +366,8 @@ window.onload = function() {
         }
     };
 
+    $("#searchsuggestions").draggable();
+
 };
 
 setTimeout(function() {
