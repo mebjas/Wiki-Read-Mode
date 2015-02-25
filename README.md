@@ -1,7 +1,7 @@
-Wiki Read Mode
+EasyWiki - Wiki Read Mode (Name Changed)
 ==============
 
-**Code Name: `EasyWiki`** <br>
+**Code Name: `EW`** <br>
 **Chrome Extension** to make **wikipedia or any wiki template** based website user firendly and more accessible. <br>
 **Current Status: `beta version released`**<br>
 **Latest Available verion: `0.4.1`**<br>
