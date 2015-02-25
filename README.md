@@ -4,7 +4,7 @@ Wiki Read Mode
 **Code Name: `EasyWiki`** <br>
 **Chrome Extension** to make **wikipedia or any wiki template** based website user firendly and more accessible. <br>
 **Current Status: `beta version released`**<br>
-**Latest Available verion: `0.3.5`**<br>
+**Latest Available verion: `0.4.1`**<br>
 **Installation URL:** [Chrome store](https://chrome.google.com/webstore/detail/wikipedia-read-mode/icnpgdbaooggmkndmiaogcokgmpdfdmc), [Not officialy released, but anyone with link can try]<br>
 **Project URL:** [Cistoner - projects](http://cistoner.org/projects/easywiki)
 
@@ -26,9 +26,10 @@ Features:
 - [x] Change the settings from dock.
 - [x] Chage font or font size of text in wiki.
 - [x] Search for any other content wiki directly from any page.
+- [x] Get quick information about any topic using instant search feature
+- [x] Drag and move instant search dialog
 - [x] Enable/Disable readmode using shortcut `Shift + R`.
 - [x] Hides the left sidebar (basically useless) while in readmode.
-- [x] Certain sites which serves as intermediate, for ex: `MAIN_PAGE` are blaclisted, they aren't modified to readmode by default
 - [x] Inpage menu show / hides depending on scroll (similar to search bar in google now).
 - [x] Show / Hide links in the article. (@todo: add a shortcut for this)
 - [x] Show / Hide references in the article. (@todo: add a shortcut for this)
