@@ -1,0 +1,4 @@
+ - [ ] Change the UI to console like UI. @newissue
+ - [ ] Check why links are not being picked. @newissue
+ - [ ] jQuery is not getting inserted throwing all errors. @newissue @priority: high
+ - [ ] Search is not working. @newissue
