@@ -10,7 +10,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["*://en.wikipedia.org/wiki/*"],
+      "matches": ["*://*.wikipedia.org/wiki/*"],
       "css": ["cs.css"],
       "js": ["cs.js"],
       "all_frames": true
